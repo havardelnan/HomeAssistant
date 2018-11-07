@@ -1,0 +1,234 @@
+  kitchen_light_on:
+    alias: Kitchen lights on
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_overlight
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            100
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            15
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            100
+            {% endif %}    
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_bench
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            100
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            8
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            100
+            {% endif %}
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_wire
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            15
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            10
+            {% endif %}
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_diningtable
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            128
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            64
+            {% endif %}    
+    
+    
+  kitchen_light_dimmed:
+    alias: Kitchen lights dimmed
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_overlight
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            8
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            8
+            {% endif %}    
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_bench
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            8
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            8
+            {% endif %}
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_wire
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            0
+            {% endif %}
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.kitchen_diningtable
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            128
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            64
+            {% endif %}   
+
+  set_bathroom_lights:
+    alias: Set bathroom lights
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.bathroom_mirror
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            12
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            5
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            25
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            25
+            {% endif %}    
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.bathroom_roof
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            12
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            5
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            25
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            25
+            {% endif %}
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.bathroom_overlight
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            25
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            12
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            25
+            {% endif %}
+  set_playroom_lights:
+    alias: Set playroomroom lights
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.playroom_wire
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            10
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            5
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            5
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            10
+            {% endif %}    
+  open_main_door:
+    alias: Unlock Main Door
+    sequence:
+      - service: switch.turn_on
+        entity_id: switch.entrance_maindoor
+      - delay: '00:00:01'
+      - service: switch.turn_off
+        entity_id: switch.entrance_maindoor
+  start_pump_hotwater:
+    alias: Turn on pump
+    sequence:
+      - service: switch.turn_on
+        entity_id: switch.switch_41
+
+  stop_pump_hotwater:
+    alias: Turn off pump
+    sequence:
+      - service: switch.turn_off
+        entity_id: switch.switch_41
+  bedroom_set_light_full:
+    alias: Bedroom set light full
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: light.level_4
+          brightness_pct: 99
+      - service: light.turn_on
+        data:
+          entity_id: light.bedroom_overlight
+          brightness_pct: 99
+  bedroom_set_light_off:
+    alias: Bedroom set light off
+    sequence:
+      - service: light.turn_off
+        data:
+          entity_id: light.bedroom_roof
+      - service: light.turn_off
+        data:
+          entity_id: light.bedroom_overlight

@@ -1,0 +1,177 @@
+  - platform: generic_thermostat
+    name: Kitchen Heating
+    heater: switch.kitchen_heating
+    target_sensor: sensor.kitchen_temperature
+    min_temp: 15
+    max_temp: 23
+    ac_mode: False
+    target_temp: 21
+    cold_tolerance: 0.1
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: Entrance heating
+    heater: switch.entrance_heating
+    target_sensor: sensor.entrance_temperature
+    min_temp: 15
+    max_temp: 23
+    ac_mode: False
+    target_temp: 20
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: Guestbathroom heating
+    heater: switch.guestbathroom_heating
+    target_sensor: sensor.guestbathroom_temperature
+    min_temp: 5
+    max_temp: 25
+    ac_mode: False
+    target_temp: 21
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: Guestbedroom heating
+    heater: switch.guestbedroom_heating
+    target_sensor: sensor.guestbathroom_temperature
+    min_temp: 5
+    max_temp: 23
+    ac_mode: False
+    target_temp: 20
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: Livingroom Heating
+    heater: switch.livingroom_heating
+    target_sensor: sensor.livingroom_temperature
+    min_temp: 15
+    max_temp: 23
+    ac_mode: False
+    target_temp: 21
+    cold_tolerance: 0.2
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: bedroom heating
+    heater: switch.bedroom_heating
+    target_sensor: sensor.bedroom_temperature
+    min_temp: 5
+    max_temp: 23
+    ac_mode: False
+    target_temp: 5
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 5
+
+  - platform: generic_thermostat
+    name: Bathroom Heating
+    heater: switch.bathroom_heating
+    target_sensor: sensor.bathroom_temperature
+    min_temp: 15
+    max_temp: 25
+    ac_mode: False
+    target_temp: 22
+    cold_tolerance: 0.1
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: Bedroomolav heating 01
+    heater: switch.bedroomolav_heating_01
+    target_sensor: sensor.bedroomolav_temperature
+    min_temp: 5
+    max_temp: 23
+    ac_mode: False
+    target_temp: 5
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: Bedroomolav heating 02
+    heater: switch.bedroomolav_heating_02
+    target_sensor: sensor.bedroomolav_temperature
+    min_temp: 5
+    max_temp: 23
+    ac_mode: False
+    target_temp: 5
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+
+  - platform: generic_thermostat
+    name: playroom heating
+    heater: switch.playroom_heating
+    target_sensor: sensor.playroom_temperature
+    min_temp: 5
+    max_temp: 23
+    ac_mode: False
+    target_temp: 20
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+  - platform: generic_thermostat
+    name: laundry heating
+    heater: switch.laundry_heating
+    target_sensor: sensor.workshop_temperature
+    min_temp: 5
+    max_temp: 23
+    ac_mode: False
+    target_temp: 20
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16
+  - platform: generic_thermostat
+    name: workshop heating
+    heater: switch.workshop_heating
+    target_sensor: sensor.workshop_temperature
+    min_temp: 5
+    max_temp: 23
+    ac_mode: False
+    target_temp: 21
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    initial_operation_mode: "auto"
+    away_temp: 16

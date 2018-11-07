@@ -1,0 +1,376 @@
+  - title: Home
+    cards:
+      - type: picture-entity
+        title: Ultimaker 3
+        entity: camera.ultimaker_3
+        camera_image: camera.ultimaker_3
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Meteogram
+        entity: camera.meteogram
+        camera_image: camera.meteogram
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: UVC G3 Pro
+        entity: camera.uvc_g3_pro
+        camera_image: camera.uvc_g3_pro
+        show_info: true
+        tap_action: dialog
+      - type: entities
+        title: Front door
+        show_header_toggle: false
+        entities:
+          - binary_sensor.ring_front_door_motion
+          - sensor.ring_front_door_last_motion
+          - binary_sensor.ring_front_door_ding
+          - sensor.ring_front_door_last_ding
+          - script.open_main_door
+      - type: entities
+        title: Outdoor
+        show_header_toggle: false
+        entities:
+          - sensor.netatmo_outdoor_temperature
+          - sensor.netatmo_outdoor_humidity
+          - sun.sun
+      - type: picture-entity
+        title: Meteogram
+        entity: camera.meteogram
+        camera_image: camera.meteogram
+        show_info: true
+        tap_action: dialog
+      - type: entities
+        title: Doors
+        show_header_toggle: false
+        entities:
+          - binary_sensor.door_kitchen_sliding
+          - binary_sensor.door_kitchen
+          - binary_sensor.door_livingroom
+          - binary_sensor.door_laundry
+      - type: entities
+        title: Windows
+        show_header_toggle: false
+        entities:
+          - sensor.window_master_bedroom_left
+          - sensor.window_master_bedroom_right
+          - sensor.window_bedroom_left
+          - sensor.window_bedroom_right
+      - type: entities
+        title: Presence
+        show_header_toggle: false
+        entities:
+          - device_tracker.elnan_648f6ad8248243da8e66d221cfc490d0
+      - type: entities
+        title: Heating
+        show_header_toggle: false
+        entities:
+          - climate.heating_kitchen
+          - sensor.aeotec_zw116_nano_switch_power_2
+          - sensor.unknown_3
+      - type: entities
+        title: Climate
+        show_header_toggle: false
+        entities:
+          - sensor.aeotec_zw100_multisensor_6_temperature_16
+          - sensor.aeotec_zw100_multisensor_6_temperature_17
+          - sensor.netatmo_kitchen_co2
+          - sensor.aeotec_zw100_multisensor_6_relative_humidity_16
+      - type: entities
+        title: Sensors
+        show_header_toggle: false
+        entities:
+          - sensor.combined_kitchen
+          - sensor.aeotec_zw100_multisensor_6_luminance_17
+      - type: entities
+        title: Lights
+        show_header_toggle: false
+        entities:
+          - input_boolean.kitchen_auto
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_2
+          - light.level_15
+          - light.level_16
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_32
+      - type: media-control
+        entity: media_player.kjkken
+      - type: entities
+        title: Heating
+        show_header_toggle: false
+        entities:
+          - climate.heating_living_room
+          - sensor.aeotec_zw116_nano_switch_power_7
+          - sensor.unknown_9
+      - type: entities
+        title: Climate
+        show_header_toggle: false
+        entities:
+          - sensor.aeotec_zw100_multisensor_6_relative_humidity_6
+          - sensor.aeotec_zw100_multisensor_6_temperature_6
+          - sensor.s08_temperature
+      - type: entities
+        title: Sensors
+        show_header_toggle: false
+        entities:
+          - sensor.combined_livingroom
+          - sensor.aeotec_zw100_multisensor_6_luminance_6
+      - type: entities
+        title: Lights
+        show_header_toggle: false
+        entities:
+          - input_boolean.livingroom_auto
+          - light.level_5
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_12
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_27
+      - type: media-control
+        entity: media_player.stue
+      - type: media-control
+        entity: media_player.living_room_tv
+      - type: entities
+        title: Lights
+        show_header_toggle: false
+        entities:
+          - input_boolean.workshop_auto
+      - type: picture-entity
+        title: Ultimaker 3
+        entity: camera.ultimaker_3
+        camera_image: camera.ultimaker_3
+        show_info: true
+        tap_action: dialog
+      - type: entities
+        title: Zwave Multisensors
+        show_header_toggle: true
+        entities:
+          - zwave.aeotec_zw100_multisensor_6
+          - zwave.aeotec_zw100_multisensor_6_10
+          - zwave.aeotec_zw100_multisensor_6_11
+          - zwave.aeotec_zw100_multisensor_6_12
+          - zwave.aeotec_zw100_multisensor_6_2
+          - zwave.aeotec_zw100_multisensor_6_3
+          - zwave.aeotec_zw100_multisensor_6_4
+          - zwave.aeotec_zw100_multisensor_6_5
+          - zwave.aeotec_zw100_multisensor_6_6
+          - zwave.aeotec_zw100_multisensor_6_7
+          - zwave.aeotec_zw100_multisensor_6_8
+          - zwave.aeotec_zw100_multisensor_6_9
+      - type: entities
+        title: Zwave Dimmere
+        show_header_toggle: true
+        entities:
+          - zwave.aeotec_zw111_nano_dimmer
+          - zwave.aeotec_zw111_nano_dimmer_10
+          - zwave.aeotec_zw111_nano_dimmer_11
+          - zwave.aeotec_zw111_nano_dimmer_2
+          - zwave.aeotec_zw111_nano_dimmer_3
+          - zwave.aeotec_zw111_nano_dimmer_5
+          - zwave.aeotec_zw111_nano_dimmer_6
+          - zwave.aeotec_zw111_nano_dimmer_7
+          - zwave.aeotec_zw111_nano_dimmer_8
+          - zwave.aeotec_zw111_nano_dimmer_9
+      - type: entities
+        title: Zwave Leddimmere
+        show_header_toggle: true
+        entities:
+          - zwave.fibaro_system_fgrgbwm441_rgbw_controller
+          - zwave.fibaro_system_fgrgbwm441_rgbw_controller_2
+          - zwave.fibaro_system_fgrgbwm441_rgbw_controller_3
+          - zwave.fibaro_system_fgrgbwm441_rgbw_controller_4
+          - zwave.fibaro_system_fgrgbwm441_rgbw_controller_5
+          - zwave.fibaro_system_fgrgbwm441_rgbw_controller_6
+          - zwave.fibaro_system_fgrgbwm441_rgbw_controller_7
+      - type: entities
+        title: Zwave Brytere
+        show_header_toggle: true
+        entities:
+          - zwave.aeotec_zw116_nano_switch
+          - zwave.aeotec_zw116_nano_switch_10
+          - zwave.aeotec_zw116_nano_switch_2
+          - zwave.aeotec_zw116_nano_switch_3
+          - zwave.aeotec_zw116_nano_switch_4
+          - zwave.aeotec_zw116_nano_switch_5
+          - zwave.aeotec_zw116_nano_switch_6
+          - zwave.aeotec_zw116_nano_switch_7
+          - zwave.aeotec_zw116_nano_switch_8
+          - zwave.aeotec_zw116_nano_switch_9
+          - zwave.aeotec_zw139_nano_switch
+      - type: entities
+        title: "Zwave D\xF8r/Vindu"
+        show_header_toggle: true
+        entities:
+          - zwave.aeotec_zw112_door_window_sensor_6
+          - zwave.s28
+          - zwave.s30
+          - zwave.s31
+          - zwave.sensative_strips
+          - zwave.sensative_strips_2
+          - zwave.sensative_strips_3
+          - zwave.sensative_strips_4
+          - zwave.sensative_strips_5
+      - type: entities
+        title: all scripts
+        show_header_toggle: true
+        entities:
+          - script.bedroom_set_light_full
+          - script.bedroom_set_light_off
+          - script.kitchen_light_dimmed
+          - script.stop_pump_hotwater
+          - script.start_pump_hotwater
+          - script.open_main_door
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.detect_weekend
+          - automation.detect_workday
+          - automation.dim_entrance_light_5_minutes_after_last_movement
+          - automation.dim_kitchen_light_10_minutes_after_last_movement
+          - automation.lets_encrypt_renewal
+          - automation.master_bedroom_button_1_pressed
+          - automation.master_bedroom_button_2_pressed
+          - automation.master_bedroom_button_3_pressed
+          - automation.master_bedroom_button_4_pressed
+          - automation.minimote_button_1_pressed
+          - automation.minimote_button_2_pressed
+          - automation.minimote_button_3_pressed
+          - automation.notify_tv_on_ding_front_door
+          - automation.notify_tv_on_movement_front_door
+          - automation.olav_button_1_pressed
+          - automation.olav_button_2_pressed
+          - automation.olav_button_3_pressed
+          - automation.olav_button_4_pressed
+          - automation.set_time_of_day_after_dark
+          - automation.set_time_of_day_day
+          - automation.set_time_of_day_morning
+          - automation.set_time_of_day_night_and_cleanup
+          - automation.startup_cleanup
+          - automation.turn_off_kitchen_light_when_time_of_day_is_night
+          - automation.turn_off_guest_bathroom_light_10_minutes_after_last_movement
+          - automation.turn_on_kitchen_light_when_time_of_day_is_after_dark
+          - automation.turn_on_entrance_light_when_there_is_movement
+          - automation.turn_on_guest_bathroom_light_when_there_is_movement
+          - automation.turn_on_kitchen_light_when_there_is_movement
+          - automation.turn_on_livingroom_light_when_time_of_day_is_after_dark
+      - type: entities
+        title: all lights
+        show_header_toggle: true
+        entities:
+          - light.level
+          - light.level_4
+          - light.level_5
+          - light.level_7
+          - light.level_8
+          - light.level_9
+          - light.level_10
+          - light.level_11
+          - light.level_15
+          - light.level_16
+          - light.level_17
+          - light.level_18
+          - light.color_temperature_light_1
+          - light.color_temperature_light_2
+          - light.level_2
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_2
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_3
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_4
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_5
+          - light.level_3
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_6
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_7
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_8
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_9
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_10
+          - light.level_12
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_11
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_12
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_13
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_14
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_15
+          - light.level_13
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_16
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_17
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_18
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_19
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_20
+          - light.level_14
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_21
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_22
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_23
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_24
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_25
+          - light.level_19
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_26
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_27
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_28
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_29
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_30
+          - light.level_20
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_31
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_32
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_33
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_34
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_35
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_36
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_37
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_38
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_39
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_40
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_41
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_43
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_44
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_45
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_46
+          - light.fibaro_system_fgrgbwm441_rgbw_controller_level_47
+          - light.bad_hoved_1
+          - light.hue_color_lamp_1
+          - light.hue_color_lamp_2
+          - light.hue_color_lamp_3
+          - light.verksted
+      - type: entities
+        title: all devices
+        show_header_toggle: true
+        entities:
+          - device_tracker.elnan_648f6ad8248243da8e66d221cfc490d0
+      - type: entities
+        title: all switches
+        show_header_toggle: true
+        entities:
+          - switch.switch_21
+          - switch.switch_22
+          - switch.switch_23
+          - switch.switch_25
+          - switch.switch_26
+          - switch.switch_28
+          - switch.switch_29
+          - switch.switch_30
+          - switch.switch_31
+          - switch.switch_32
+          - switch.switch_37
+          - switch.switch_38
+          - switch.switch_3
+          - switch.switch_5
+          - switch.switch_6
+          - switch.switch_7
+          - switch.switch_9
+          - switch.switch_11
+          - switch.switch_13
+          - switch.switch_15
+          - switch.switch_17
+          - switch.switch_19
+          - switch.switch_27
+          - switch.switch_33
+          - switch.switch_34
+          - switch.switch_35
+          - switch.switch_36
+          - switch.switch_20
+          - switch.unknown_node_80_switch
+          - switch.unknown_node_81_switch
+      - type: media-control
+        entity: media_player.living_room_tv
+      - type: media-control
+        entity: media_player.kjkken
+      - type: media-control
+        entity: media_player.stue
+      - type: media-control
+        entity: media_player.hovedbad
+      - type: media-control
+        entity: media_player.bad

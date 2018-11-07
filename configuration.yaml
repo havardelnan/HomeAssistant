@@ -1,0 +1,706 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Rognervegen 4
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret ha_latitude
+  longitude: !secret ha_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 100
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Oslo
+  # Customization file
+  customize: !include customize.yaml
+  customize_glob:
+    "sensor*exporting*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor.alarm*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor.*power_management*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor.*nano*heat*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor*sourcenodeid*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor*burglar*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor*ultraviolet*":
+      hidden: true
+      homebridge_hidden: true
+    "binary_sensor*_motion":
+      device_class: motion
+    "sensor*temperature":
+      device_class: temperature
+    "sensor*humidity":
+      device_class: humidity
+    "binary_sensor*door":
+      device_class: door
+    "sensor*illuminance":
+      device_class: illuminance
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: !secret base_url
+  server_port: 4343
+  #ssl_certificate: "/ssl/fullchain.pem"
+  #ssl_key: "/ssl/privkey.pem"
+  cors_allowed_origins:
+    - https://google.com
+    - https://www.home-assistant.io
+  use_x_forwarded_for: True
+  trusted_proxies:
+    - 127.0.0.1
+    - ::1
+  trusted_networks:
+    - 127.0.0.1
+    - ::1
+    - 10.20.0.0/23
+    - 2001:DB8:ABCD::/48
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+
+influxdb:
+  host: 127.0.0.1
+  username: "home-assistant"
+  password: !secret flux_db_password
+  include:
+    domains:
+      - sensor
+      - input_boolean
+      - binary_sensor
+      - light
+      - switch
+      - weather
+      - input_number
+  default_measurement: state
+  tags:
+    instance: prod
+    source: hass
+ios:
+  push:
+    categories:
+      - name: 'Movement detected'
+        identifier: 'Movement_detected'
+        actions:
+          - identifier: 'SOUND_ALARM'
+            title: 'Sound Alarm'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: yes
+            behavior: 'default'
+          - identifier: 'SILENCE_ALARM'
+            title: 'Silence Alarm'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: no
+            behavior: 'textInput'
+            textInputButtonTitle: 'Silencio!'
+            textInputPlaceholder: 'Placeholder'
+
+zone:
+  - name: Verksted
+    latitude: !secret ha_latitude
+    longitude: !secret ha_longitude
+    radius: 3
+    passive: true
+  - name: Kjøkken
+    latitude: !secret ha_latitude
+    longitude: !secret ha_longitude
+    radius: 3
+    passive: true
+apple_tv:
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the develoers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+recorder:
+  db_url: !secret recorder_db_url
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+weather:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+  - platform: met
+# Weather prediction
+input_number:
+  powerconsumptionheating:
+    name: Slider
+    min: 0
+    max: 60000
+sensor:
+  - platform: template
+    sensors: 
+      power_heating:
+        friendly_name: "Forbruk Oppvarming"
+        value_template: >
+          {{
+          ((states.sensor.bathroom_heating_power.state | int) +
+          (states.sensor.bedroom_heating_power.state | int) +
+          (states.sensor.entrance_heating_power.state | int) +
+          (states.sensor.guestbathroom_heating_power.state | int) +
+          (states.sensor.guestbedroom_heating_power.state | int) +
+          (states.sensor.kitchen_heating_power.state | int) +
+          (states.sensor.laundry_heating_power.state | int) +
+          (states.sensor.livingroom_heating_power.state | int) +
+          (states.sensor.playroom_heating_power.state | int) +
+          (states.sensor.bedroomolav_heating_power_01.state | int) +
+          (states.sensor.bedroomolav_heating_power_02.state | int) +
+          (states.sensor.workshop_heating_power.state | int))
+          }}
+        unit_of_measurement: 'W'
+      bedroom_window_left:
+        friendly_name: 'Venstre vindu'
+        value_template: >
+          {% if is_state("binary_sensor.bedroom_window_left", "on") %}
+          Åpen
+          {% else %}
+          Lukket
+          {% endif %}
+        icon_template: >
+          {% set battery_level = states.zwave.s28.attributes.battery_level | default(0) | int %}
+          {% set battery_round = (battery_level / 10) |int * 10 %}
+          {% if battery_round >= 30 %}
+            {% if is_state("binary_sensor.bedroom_window_left", "on") %}
+            mdi:window-open
+            {% else %}
+            mdi:window-closed
+            {% endif %}
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+      bedroom_window_right:
+        friendly_name: 'Høyre vindu'
+        value_template: >
+          {% if is_state("binary_sensor.bedroom_window_right", "on") %}
+          Åpen
+          {% else %}
+          Lukket
+          {% endif %}
+        icon_template: >
+          {% set battery_level = states.zwave.s29.attributes.battery_level | default(0) | int %}
+          {% set battery_round = (battery_level / 10) |int * 10 %}
+          {% if battery_round >= 30 %}
+            {% if is_state("binary_sensor.bedroom_window_right", "on") %}
+            mdi:window-open
+            {% else %}
+            mdi:window-closed
+            {% endif %}
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+      bedroomolav_window_left:
+        friendly_name: 'Venstre vindu'
+        value_template: >
+          {% if is_state("binary_sensor.bedroomolav_window_left", "on") %}
+          Åpen
+          {% else %}
+          Lukket
+          {% endif %}
+        icon_template: >
+          {% set battery_level = states.zwave.s30.attributes.battery_level | default(0) | int %}
+          {% set battery_round = (battery_level / 10) |int * 10 %}
+          {% if battery_round >= 30 %}
+            {% if is_state("binary_sensor.bedroomolav_window_left", "on") %}
+            mdi:window-open
+            {% else %}
+            mdi:window-closed
+            {% endif %}
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+      bedroomolav_window_right:
+        friendly_name: 'Høyre vindu'
+        value_template: >
+          {% if is_state("binary_sensor.bedroomolav_window_right", "on") %}
+          Åpen
+          {% else %}
+          Lukket
+          {% endif %}
+        icon_template: >
+          {% set battery_level = states.zwave.s31.attributes.battery_level | default(0) | int %}
+          {% set battery_round = (battery_level / 10) |int * 10 %}
+          {% if battery_round >= 30 %}
+            {% if is_state("binary_sensor.bedroomolav_window_right", "on") %}
+            mdi:window-open
+            {% else %}
+            mdi:window-closed
+            {% endif %}
+          {% elif battery_round > 0 %}
+            mdi:battery-{{ battery_round }}
+          {% else %}
+            mdi:battery-alert
+          {% endif %}
+      smarthousemode:
+        friendly_name: 'Modus'
+        value_template: >
+          {% if is_state("input_boolean.tod_morning", "on") %}
+          Morgen
+          {% elif is_state("input_boolean.tod_day", "on") %}
+          Dag
+          {% elif is_state("input_boolean.tod_ad", "on") %}
+          Kveld
+          {% elif is_state("input_boolean.tod_night", "on") %}
+          Natt
+          {% else %}
+          Feil
+          {% endif %}
+        icon_template: >
+          {% if is_state("input_boolean.tod_morning", "on") %}
+          mdi:weather-sunset-up
+          {% elif is_state("input_boolean.tod_day", "on") %}
+          mdi:weather-sunny
+          {% elif is_state("input_boolean.tod_ad", "on") %}
+          mdi:weather-sunset-down
+          {% elif is_state("input_boolean.tod_night", "on") %}
+          mdi: weather-night
+          {% else %}
+          mdi:weather-night
+          {% endif %}
+      s01_battery:
+        value_template: '{{ states.zwave.s01.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s02_battery:
+        value_template: '{{ states.zwave.s02.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s03_battery:
+        value_template: '{{ states.zwave.s03.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s04_battery:
+        value_template: '{{ states.zwave.s04.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s05_battery:
+        value_template: '{{ states.zwave.s05.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s06_battery:
+        value_template: '{{ states.zwave.s06.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s07_battery:
+        value_template: '{{ states.zwave.s07.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s08_battery:
+        value_template: '{{ states.zwave.s08.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s09_battery:
+        value_template: '{{ states.zwave.s09.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s10_battery:
+        value_template: '{{ states.zwave.s10.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s11_battery:
+        value_template: '{{ states.zwave.s11.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s12_battery:
+        value_template: '{{ states.zwave.s12.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s13_battery:
+        value_template: '{{ states.zwave.s13.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s14_battery:
+        value_template: '{{ states.zwave.s14.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s15_battery:
+        value_template: '{{ states.zwave.s15.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s22_battery:
+        value_template: '{{ states.zwave.s22.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s23_battery:
+        value_template: '{{ states.zwave.s23.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s24_battery:
+        value_template: '{{ states.zwave.s24.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s25_battery:
+        value_template: '{{ states.zwave.s25.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s26_battery:
+        value_template: '{{ states.zwave.s26.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s28_battery:
+        value_template: '{{ states.zwave.s28.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s29_battery:
+        value_template: '{{ states.zwave.s29.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s30_battery:
+        value_template: '{{ states.zwave.s30.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+      s31_battery:
+        value_template: '{{ states.zwave.s31.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
+  - platform: ring
+  - platform: moon
+  - platform: netatmo
+    modules:
+      Kitchen:
+        - temperature
+        - co2
+        - humidity
+        - noise
+        - pressure
+        - wifi_status
+      Outdoor:
+        - temperature
+        - humidity
+        - max_temp
+        - min_temp
+        - rf_status
+        - battery_vp
+  - platform: netatmo_public
+    areas:
+      - lat_ne: 63.415
+        lon_ne: 10.375
+        lat_sw: 63.409
+        lon_sw: 10.359
+        monitored_conditions:
+          - temperature
+          - pressure
+          - humidity
+          - rain
+          - windstrength
+          - guststrength
+tibber:
+  access_token: !secret tibber_access_token
+  
+light:
+  - platform: group
+    name: bathroom_roof
+    entities:
+      - light.bathroom_01
+      - light.bathroom_02
+      - light.bathroom_03
+      - light.bathroom_04
+  - platform: group
+    name: workshop_roof
+    entities:
+      - light.workshop_roof01
+      - light.workshop_roof02
+
+
+input_boolean:
+  kitchen_auto:
+    name: Light kitchen auto
+    icon: mdi:brightness-auto
+  livingroom_auto:
+    name: Light livingroom auto
+    icon: mdi:brightness-auto
+  bedroom_auto:
+    name: Light bedroom auto
+    icon: mdi:brightness-auto
+  bathroom_auto:
+    name: Light bathroom auto
+    icon: mdi:brightness-auto
+  guestbathroom_auto:
+    name: Light guest bathroom auto
+    icon: mdi:brightness-auto   
+  guestbedroom_auto:
+    name: Light guest bedroom auto
+    icon: mdi:brightness-auto
+  hall_auto:
+    name: Light hall auto
+    icon: mdi:brightness-auto
+  walkway_auto:
+    name: Light walkway auto
+    icon: mdi:brightness-auto
+  playroom_auto:
+    name: Light playroom auto
+    icon: mdi:brightness-auto
+  kidsbedroom_auto:
+    name: Light kids bedroom auto
+    icon: mdi:brightness-auto
+  laundry_auto:
+    name: Light laundry room auto
+    icon: mdi:brightness-auto
+  workshop_auto:
+    name: Light workshop auto
+    icon: mdi:brightness-auto
+  kitchen_movement:
+    name: Light kitchen movement
+    icon: mdi:run-fast
+  livingroom_movement:
+    name: Light livingroom movement
+    icon: mdi:run-fast
+  bedroom_movement:
+    name: Light bedroom movement
+    icon: mdi:run-fast
+  bathroom_movement:
+    name: Light bathroom movement
+    icon: mdi:run-fast
+  guestbathroom_movement:
+    name: Light guest bathroom movement
+    icon: mdi:run-fast   
+  guestbedroom_movement:
+    name: Light guest bedroom movement
+    icon: mdi:run-fast
+  hall_movement:
+    name: Light hall movement
+    icon: mdi:run-fast
+  walkway_movement:
+    name: Light walkway movement
+    icon: mdi:run-fast
+  playroom_movement:
+    name: Light playroom movement
+    icon: mdi:run-fast
+  bedroomolav_movement:
+    name: Light kids bedroom movement
+    icon: mdi:run-fast
+  laundry_movement:
+    name: Light laundry room movement
+    icon: mdi:run-fast
+  workshop_movement:
+    name: Light workshop movement
+    icon: mdi:run-fast
+  tod_ad:
+    name: Time of day after dark
+    icon: mdi:clock
+  tod_day:
+    name: Time of day daytime
+    icon: mdi:clock
+  tod_night:
+    name: Time of day night
+    icon: mdi:clock
+  tod_morning:
+    name: Time of day morning
+    icon: mdi:clock
+  tod_workday:
+    name: Is a workday
+    icon: mdi:calendar
+
+binary_sensor:
+  - platform: ring
+  - platform: template
+    sensors:
+      kitchen_motion_combined:
+        friendly_name: "Bevegelse kjøkken"
+        device_class: motion
+        value_template: >-
+          {% if is_state('binary_sensor.kitchen_01_motion', 'on')
+             or is_state('binary_sensor.kitchen_02_motion', 'on')
+             or is_state('binary_sensor.hallway01_motion', 'on') %}
+             true
+          {% else %}
+             false
+          {% endif %}
+
+  - platform: template
+    sensors:
+      livingroom_motion_combined:
+        friendly_name: "Bevegelse stue"
+        device_class: motion
+        value_template: >-
+          {% if is_state('binary_sensor.livingroom_01_motion', 'on')
+             or is_state('binary_sensor.livingroom_02_motion', 'on') %}
+             true
+          {% else %}
+             false
+          {% endif %}
+  - platform: workday
+    country: "NO"
+    workdays: [mon, tue, wed, thu, fri]
+input_select:
+  guestbedroom_mode:
+    name: Gjesterom modus
+    options:
+     - Gjester
+     - Ikke gjester
+camera:
+  - platform: ring
+
+  - platform: generic
+    still_image_url: !secret meteogram_png_url
+    name: Meteogram
+
+  - platform: mjpeg
+    name: Ultimaker 3
+    mjpeg_url: http://ultimaker001.local.elnan.do:8080/?action=stream
+    
+  - platform: uvc
+    nvr: !secret nvr_ip
+    key: !secret nvr_key
+    password: !secret nvr_password
+
+openuv:
+  api_key: !secret openuv_api_key
+
+ffmpeg:
+
+device_tracker:
+  - platform: owntracks
+    waypoints: True
+    events_only: True
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+  autoheal: false
+
+netatmo:
+  api_key: !secret netatmo_api_key
+  secret_key: !secret netatmo_secret_key
+  username: !secret netatmo_username
+  password: !secret netatmo_password
+
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
+
+mqtt:
+  broker: core-mosquitto
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+  google_actions:
+    filter:
+      include_entities:
+        - light.kitchen_bench
+        - light.kitchen_wire
+        - light.livingroom_roof
+    entity_config:
+      light.kitchen_bench:
+        name: Kjøkkenbenk
+        aliases:
+         - Benk
+         - Kitchen bench
+         - Bench
+        room: kitchen
+
+    entity_config:
+      light.livingroom_roof:
+        name: Living room roof
+        aliases:
+         - Stuetak
+        room: living room
+        
+media_player:
+  - platform: webostv
+    host: 10.20.0.60
+    name: Living Room TV
+    timeout: 5
+    filename: webostv.conf
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: 78:5D:C8:09:2F:47
+    customize:
+      sources:
+        - livetv
+        - youtube
+        - netflix
+
+notify:
+  - platform: webostv
+    host: 10.20.0.60
+    name: Living_Room_TV_notify
+    filename: webostv.conf
+
+  - name: pushbullet_notify
+    platform: pushbullet
+    api_key: !secret pushbullet_api_key
+
+mqtt_statestream:
+  base_topic: homeassistant
+  publish_attributes: true
+  publish_timestamps: true
+  include:
+    domains:
+      - sensor
+      - light
+      - switch
+      - weather
+      - input_boolean
+      - input_select
+      - input_number
+switch:
+  - platform: mqtt
+    name: "Workshop switch"
+    state_topic: "home/workshop/switch1"
+    command_topic: "home/workshop/switch1/set"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_on: "ON"
+    state_off: "OFF"
+    optimistic: false
+    qos: 0
+    retain: true
+    
+climate: !include climate.yaml
+scene: !include scenes.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

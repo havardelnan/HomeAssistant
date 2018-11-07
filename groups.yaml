@@ -1,0 +1,37 @@
+shellreleaxed:
+  name: Skallsikring
+  entities:
+    - binary_sensor.kitchen_door
+    - binary_sensor.kitchen_door_sliding
+    - binary_sensor.guestbedroom_door
+    - binary_sensor.livingroom_door
+    - binary_sensor.laundry_door
+
+shellstrict:
+  name: Skallsikring streng
+  entities:
+    - binary_sensor.kitchen_door
+    - binary_sensor.kitchen_door_sliding
+    - binary_sensor.guestbedroom_door
+    - binary_sensor.livingroom_door
+    - binary_sensor.laundry_door
+    - binary_sensor.bedroom_window_left
+    - binary_sensor.bedroom_window_right
+    - binary_sensor.bedroomolav_window_left
+    - binary_sensor.bedroomolav_window_right
+
+heating_switches:
+  name: Brytere for oppvarming
+  entities:
+  - sensor.bathroom_heating_power
+  - sensor.bedroom_heating_power
+  - sensor.entrance_heating_power
+  - sensor.guestbathroom_heating_power
+  - sensor.guestbedroom_heating_power
+  - sensor.kitchen_heating_power
+  - sensor.laundry_heating_power
+  - sensor.livingroom_heating_power
+  - sensor.playroom_heating_power
+  - sensor.workshop_heating_power
+  - sensor.bedroomolav_heating_power_01
+  - sensor.bedroomolav_heating_power_02

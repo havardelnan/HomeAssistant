@@ -93,6 +93,7 @@ influxdb:
   tags:
     instance: prod
     source: hass
+
 ios:
   push:
     categories:
@@ -125,6 +126,7 @@ zone:
     longitude: !secret ha_longitude
     radius: 3
     passive: true
+
 apple_tv:
 
 # Checks for available updates
@@ -159,8 +161,8 @@ map:
 sun:
 
 weather:
-  - platform: darksky
-    api_key: !secret darksky_api_key
+#  - platform: darksky
+#    api_key: !secret darksky_api_key
   - platform: met
 # Weather prediction
 input_number:

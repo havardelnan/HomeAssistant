@@ -614,11 +614,6 @@ ring:
   username: !secret ring_username
   password: !secret ring_password
 
-mqtt:
-  broker: core-mosquitto
-  username: !secret mqtt_username
-  password: !secret mqtt_password
-
 # Text to speech
 tts:
   - platform: google

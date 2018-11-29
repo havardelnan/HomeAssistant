@@ -616,8 +616,6 @@ cloud:
          - Kitchen bench
          - Bench
         room: kitchen
-
-    entity_config:
       light.livingroom_roof:
         name: Living room roof
         aliases:

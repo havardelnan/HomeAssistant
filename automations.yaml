@@ -107,8 +107,6 @@
       - condition: state
         entity_id: input_boolean.kitchen_auto
         state: 'on'
-    condition: and
-    conditions:
       - condition: state
         entity_id: group.motion_kitchen
         state: 'off'        
@@ -128,8 +126,6 @@
       - condition: state
         entity_id: input_boolean.kitchen_auto
         state: 'on'
-    condition: and
-    conditions:
       - condition: state
         entity_id: group.motion_kitchen
         state: 'on'        

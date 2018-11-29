@@ -1,6 +1,6 @@
 # HomeAssistant-config
-16 Multisensors
-12 Floor heating zones
+16 multisensors
+12 floor heating zones
 19 light zones
 
 Work in progress...

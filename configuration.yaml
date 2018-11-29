@@ -1,16 +1,10 @@
 homeassistant:
-  # Name of the location where Home Assistant is running
   name: Rognervegen 4
-  # Location required to calculate the time the sun rises and sets
   latitude: !secret ha_latitude
   longitude: !secret ha_longitude
-  # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 100
-  # metric for Metric, imperial for Imperial
   unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Oslo
-  # Customization file
   customize: !include customize.yaml
   customize_glob:
     "sensor*exporting*":
@@ -44,23 +38,15 @@ homeassistant:
       device_class: door
     "sensor*illuminance":
       device_class: illuminance
-# Show links to resources in log and frontend
-#introduction:
 
-# Enables the frontend
 frontend:
 
-# Enables configuration UI
 config:
 
 http:
-  # Secrets are defined in the file secrets.yaml
   api_password: !secret http_password
-  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   base_url: !secret base_url
   server_port: 4343
-  #ssl_certificate: "/ssl/fullchain.pem"
-  #ssl_key: "/ssl/privkey.pem"
   cors_allowed_origins:
     - https://google.com
     - https://www.home-assistant.io
@@ -132,37 +118,30 @@ apple_tv:
 updater:
   include_used_components: true
 
-# Discover some devices automatically
 discovery:
 
-# Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
 recorder:
   db_url: !secret recorder_db_url
 
-# Enables support for tracking state changes over time
 history:
 
-# View all events in a logbook
 logbook:
 
-# Enables a map showing the location of tracked devices
 map:
 
-# Track the sun
 sun:
 
 weather:
-  - platform: darksky
-    api_key: !secret darksky_api_key
   - platform: met
-# Weather prediction
+
 input_number:
   powerconsumptionheating:
     name: Slider
     min: 0
     max: 60000
+
 sensor:
   - platform: template
     sensors: 
@@ -427,7 +406,7 @@ sensor:
           - guststrength
 tibber:
   access_token: !secret tibber_access_token
-  
+
 light:
   - platform: group
     name: bathroom_roof
@@ -441,7 +420,6 @@ light:
     entities:
       - light.workshop_roof01
       - light.workshop_roof02
-
 
 input_boolean:
   kitchen_auto:
@@ -556,6 +534,7 @@ input_select:
     options:
      - Gjester
      - Ikke gjester
+     
 camera:
   - platform: ring
 
@@ -577,10 +556,8 @@ openuv:
 
 ffmpeg:
 
-device_tracker:
-  - platform: owntracks
-    waypoints: True
-    events_only: True
+owntracks:
+
 zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
@@ -596,11 +573,9 @@ ring:
   username: !secret ring_username
   password: !secret ring_password
 
-# Text to speech
 tts:
   - platform: google
 
-# Cloud
 cloud:
   google_actions:
     filter:
@@ -621,7 +596,7 @@ cloud:
         aliases:
          - Stuetak
         room: living room
-        
+
 media_player:
   - platform: webostv
     host: 10.20.0.60
@@ -643,7 +618,6 @@ notify:
     host: 10.20.0.60
     name: Living_Room_TV_notify
     filename: webostv.conf
-
   - name: pushbullet_notify
     platform: pushbullet
     api_key: !secret pushbullet_api_key
@@ -661,6 +635,7 @@ mqtt_statestream:
       - input_boolean
       - input_select
       - input_number
+      
 switch:
   - platform: mqtt
     name: "Workshop switch"

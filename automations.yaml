@@ -110,7 +110,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.kitchen_movement
+        entity_id: group.motion_kitchen
         state: 'off'        
   action:
     service: script.turn_on
@@ -131,7 +131,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.kitchen_movement
+        entity_id: group.motion_kitchen
         state: 'on'        
   action:
     service: script.turn_on
@@ -141,7 +141,7 @@
   alias: Kjøkken - Slå på lys når det er bevegelse
   trigger:
     platform: state
-    entity_id: binary_sensor.kitchen_motion_combined
+    entity_id: group.motion_kitchen
     to: 'on'
   condition:
     condition: and
@@ -153,7 +153,7 @@
     - service: script.turn_on
       entity_id: script.kitchen_light_on
     - service: input_boolean.turn_on
-      entity_id: input_boolean.kitchen_movement
+      entity_id: group.motion_kitchen
 
 - id: kitchen_turn_on_light_dimed_after_movement
   alias: Kjøkken - Dim lys 15 minutter etter siste bevegelse
@@ -173,7 +173,7 @@
     - service: script.turn_on
       entity_id: script.kitchen_light_dimmed
     - service: input_boolean.turn_off
-      entity_id: input_boolean.kitchen_movement
+      entity_id: group.motion_kitchen
 
 - id: kitchen_turn_on_light_dimmed_auto
   alias: Kjøkken - Slå på lys dimmet når modus endres til auto
@@ -185,7 +185,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.kitchen_movement
+        entity_id: group.motion_kitchen
         state: 'off'        
   action:
     service: script.turn_on
@@ -201,7 +201,7 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.kitchen_movement
+        entity_id: group.motion_kitchen
         state: 'on'        
   action:
     service: script.turn_on

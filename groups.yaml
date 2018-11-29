@@ -35,3 +35,9 @@ heating_switches:
   - sensor.workshop_heating_power
   - sensor.bedroomolav_heating_power_01
   - sensor.bedroomolav_heating_power_02
+motion_kitchen:
+  name: Bevegelse kjøkken
+  entities:
+#    - binary_sensor.kitchen_01_motion
+    - binary_sensor.kitchen_02_motion
+    - binary_sensor.hallway01_motion

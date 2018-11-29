@@ -28,6 +28,16 @@ views:
         unit: W
         graph: line
         line_color: '#3498db'
+      - type: gauge
+        title: Forbruk oppvarming
+        entity: sensor.power_heating
+        unit_of_measurement: W
+        min: 0
+        max: 9000
+        severity:
+          red: 6000
+          green: 0
+          yellow: 4000
       - id: 1c9a96de7c5d4447bdecd84e2d4e31fb  # Automatically created id
         type: entities
         title: Ute
@@ -88,9 +98,18 @@ views:
       - id: 5fdb099fcd2f4078913f1cfb9c86d3b9  # Automatically created id
         type: iframe
         url: http://st.atb.no/New/minskjerm/FST.aspx?visMode=1&cTit=&c1=1&s1=16011205&sv1=&cn1=&template=1&cmhb=A8AD00&cmhc=000000&cshb=000000&cshc=FFFFFF&arb=000000&rows=3&period=&
+      - id: 5fdb099fcd2f4078913f1cfb94565766
+        type: picture-glance
+        title: Utendørs
+        entities:
+          - sensor.netatmo_public_data_temperature
+          - sensor.netatmo_public_data_humidity
+          - sensor.smarthousemode
+        camera_image: camera.uvc_g3_pro
   - title: Kjøkken
     # Optional unique id for direct access /lovelace/${id}
     id: kitchen
+    icon: mdi:silverware
     # Each view can have a different theme applied.
     theme: dark-mode
 #    panel: true
@@ -123,6 +142,7 @@ views:
             - entity: light.kitchen_diningtable
               type: custom:slider-entity-row
               show_value: true
+              toggle: true
       - id: 53f4612896e940229b6e7c18dc69ab08  # Automatically created id
         type: conditional
         conditions:
@@ -136,8 +156,10 @@ views:
             - entity: input_boolean.kitchen_auto
               name: Automatisk
             - entity: light.kitchen_diningtable
+            - entity: light.kitchen_diningtable
               type: custom:slider-entity-row
               show_value: true
+              full_row: true
       - id: a58cdb067ced4946b0a388d7d7152274  # Automatically created id
         type: glance
         column_width: 100px
@@ -165,6 +187,7 @@ views:
   - title: Gjesterom/bad
     # Optional unique id for direct access /lovelace/${id}
     id: guestarea
+    icon: mdi:briefcase
 #    panel: true
     # Each view can have a different theme applied.
     theme: dark-mode
@@ -278,6 +301,7 @@ views:
   - title: Stue
     # Optional unique id for direct access /lovelace/${id}
     id: livingroom
+    icon: mdi:sofa
 #    panel: true
     # Each view can have a different theme applied.
     theme: dark-mode
@@ -300,8 +324,10 @@ views:
               name: Automatisk
             - entity: light.livingroom_outside
               name: Utelys
+            - entity: light.livingroom_outside
+              name: Utelys
               type: custom:slider-entity-row
-              show_value: true
+              full_row: true
       - id: f82820017cc447e19b9f7ec557a6a30b  # Automatically created id
         type: conditional
         conditions:
@@ -344,6 +370,7 @@ views:
   - title: Soverom
     # Optional unique id for direct access /lovelace/${id}
     id: bedroom
+    icon: mdi:hotel
     panel: true
     # Each view can have a different theme applied.
     theme: dark-mode
@@ -386,6 +413,7 @@ views:
   - title: Bad
     # Optional unique id for direct access /lovelace/${id}
     id: bathroom
+    icon: mdi:shower
 #    panel: true
     # Each view can have a different theme applied.
     theme: dark-mode
@@ -448,6 +476,7 @@ views:
     # Optional unique id for direct access /lovelace/${id}
     id: bedroomolav
     panel: true
+    icon: mdi:castle
     # Each view can have a different theme applied.
     theme: dark-mode
     # The cards to show on this view.
@@ -495,6 +524,7 @@ views:
   - title: Lekerom
     # Optional unique id for direct access /lovelace/${id}
     id: playroom
+    icon: mdi:gamepad-variant
     panel: true
     # Each view can have a different theme applied.
     theme: dark-mode
@@ -533,6 +563,7 @@ views:
   - title: Vaskerom
     # Optional unique id for direct access /lovelace/${id}
     id: laundry
+    icon: mdi:washing-machine
     panel: true
     # Each view can have a different theme applied.
     theme: dark-mode
@@ -573,6 +604,7 @@ views:
   - title: Verksted
     # Optional unique id for direct access /lovelace/${id}
     id: workshop
+    icon: mdi:hammer
     panel: true
     # Each view can have a different theme applied.
     theme: dark-mode
@@ -915,6 +947,12 @@ views:
               - switch.guestbathroom_heating
               - switch.playroom_heating
               - switch.workshop_heating
+          - type: light
+            entity: light.bedroom_overlight
+            name: Kids Bedroom
+          - type: light
+            entity: light.bedroom_roof
+            name: My Office
           - type: entities
             title: Combined Kitchen
             show_header_toggle: false

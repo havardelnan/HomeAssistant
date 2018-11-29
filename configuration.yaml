@@ -542,20 +542,6 @@ binary_sensor:
   - platform: ring
   - platform: template
     sensors:
-      kitchen_motion_combined:
-        friendly_name: "Bevegelse kjøkken"
-        device_class: motion
-        value_template: >-
-          {% if is_state('binary_sensor.kitchen_01_motion', 'on')
-             or is_state('binary_sensor.kitchen_02_motion', 'on')
-             or is_state('binary_sensor.hallway01_motion', 'on') %}
-             true
-          {% else %}
-             false
-          {% endif %}
-
-  - platform: template
-    sensors:
       livingroom_motion_combined:
         friendly_name: "Bevegelse stue"
         device_class: motion
@@ -569,6 +555,7 @@ binary_sensor:
   - platform: workday
     country: "NO"
     workdays: [mon, tue, wed, thu, fri]
+    
 input_select:
   guestbedroom_mode:
     name: Gjesterom modus

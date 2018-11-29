@@ -7,6 +7,7 @@
 .storage
 .cloud
 .google.token
+!.travis.yml
 ip_bans.yaml
 secrets.yaml
 known_devices.yaml

@@ -1,0 +1,87 @@
+  kitchen_auto:
+    name: Light kitchen auto
+    icon: mdi:brightness-auto
+  livingroom_auto:
+    name: Light livingroom auto
+    icon: mdi:brightness-auto
+  bedroom_auto:
+    name: Light bedroom auto
+    icon: mdi:brightness-auto
+  bathroom_auto:
+    name: Light bathroom auto
+    icon: mdi:brightness-auto
+  guestbathroom_auto:
+    name: Light guest bathroom auto
+    icon: mdi:brightness-auto   
+  guestbedroom_auto:
+    name: Light guest bedroom auto
+    icon: mdi:brightness-auto
+  hall_auto:
+    name: Light hall auto
+    icon: mdi:brightness-auto
+  walkway_auto:
+    name: Light walkway auto
+    icon: mdi:brightness-auto
+  playroom_auto:
+    name: Light playroom auto
+    icon: mdi:brightness-auto
+  kidsbedroom_auto:
+    name: Light kids bedroom auto
+    icon: mdi:brightness-auto
+  laundry_auto:
+    name: Light laundry room auto
+    icon: mdi:brightness-auto
+  workshop_auto:
+    name: Light workshop auto
+    icon: mdi:brightness-auto
+  kitchen_movement:
+    name: Light kitchen movement
+    icon: mdi:run-fast
+  livingroom_movement:
+    name: Light livingroom movement
+    icon: mdi:run-fast
+  bedroom_movement:
+    name: Light bedroom movement
+    icon: mdi:run-fast
+  bathroom_movement:
+    name: Light bathroom movement
+    icon: mdi:run-fast
+  guestbathroom_movement:
+    name: Light guest bathroom movement
+    icon: mdi:run-fast   
+  guestbedroom_movement:
+    name: Light guest bedroom movement
+    icon: mdi:run-fast
+  hall_movement:
+    name: Light hall movement
+    icon: mdi:run-fast
+  walkway_movement:
+    name: Light walkway movement
+    icon: mdi:run-fast
+  playroom_movement:
+    name: Light playroom movement
+    icon: mdi:run-fast
+  bedroomolav_movement:
+    name: Light kids bedroom movement
+    icon: mdi:run-fast
+  laundry_movement:
+    name: Light laundry room movement
+    icon: mdi:run-fast
+  workshop_movement:
+    name: Light workshop movement
+    icon: mdi:run-fast
+  tod_ad:
+    name: Time of day after dark
+    icon: mdi:clock
+  tod_day:
+    name: Time of day daytime
+    icon: mdi:clock
+  tod_night:
+    name: Time of day night
+    icon: mdi:clock
+  tod_morning:
+    name: Time of day morning
+    icon: mdi:clock
+  tod_workday:
+    name: Is a workday
+    icon: mdi:calendar

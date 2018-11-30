@@ -176,7 +176,7 @@ views:
             name: Lydnivå
           - entity: sensor.kitchen_illuminance
             name: Lysstyrke
-          - entity: binary_sensor.kitchen_motion_combined
+          - entity: group.motion_kitchen
             name: Bevegelse
           - entity: binary_sensor.kitchen_door
             name: Dør

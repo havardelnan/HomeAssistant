@@ -516,4 +516,49 @@
       - input_boolean.kidsbedroom_auto
       - input_boolean.laundry_auto
       - input_boolean.workshop_auto
-
+      
+- id: update_morning_commute_sensor
+  alias: "Commute - Update morning commute sensor"
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      minutes: '/5'
+      seconds: 00
+  condition:
+    - condition: time
+      after: '07:00:00'
+      before: '09:00:00'
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    - service: sensor.google_travel_sensor_update
+      data:
+        entity_id: sensor.H_morning_comute
+        
+- id: update_evening_commute_sensor
+  alias: "Commute - Update evening commute sensor"
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      minutes: '/5'
+      seconds: 00
+  condition:
+    - condition: time
+      after: '15:00:00'
+      before: '17:00:00'
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+    - service: sensor.google_travel_sensor_update
+      data:
+        entity_id: sensor.H_evening_comute

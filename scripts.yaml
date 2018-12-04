@@ -53,13 +53,13 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            255
+            128
             {% elif is_state('input_boolean.tod_night', 'on') %}
             0
             {% elif is_state('input_boolean.tod_day', 'on') %}
             0
             {% elif is_state('input_boolean.tod_morning', 'on') %}
-            255
+            128
             {% endif %}    
     
     
@@ -118,13 +118,13 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            128
+            10
             {% elif is_state('input_boolean.tod_night', 'on') %}
             0
             {% elif is_state('input_boolean.tod_day', 'on') %}
             0
             {% elif is_state('input_boolean.tod_morning', 'on') %}
-            200
+            10
             {% endif %}   
 
   set_bathroom_lights:

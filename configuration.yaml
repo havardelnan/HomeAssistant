@@ -45,7 +45,6 @@ frontend:
 config:
 
 http:
-  api_password: !secret http_password
   base_url: !secret base_url
   server_port: 4343
   cors_allowed_origins:
@@ -271,7 +270,7 @@ notify:
     api_key: !secret pushbullet_api_key
     notify:
   - platform: html5
-    name: HomeAssistant
+    name: HomeAssistantHTML5
     gcm_api_key: !secret google_sender_api_key
     gcm_sender_id: !secret google_sender_id
 

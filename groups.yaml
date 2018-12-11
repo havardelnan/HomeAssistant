@@ -41,3 +41,8 @@ motion_kitchen:
 #    - binary_sensor.kitchen_01_motion
     - binary_sensor.kitchen_02_motion
     - binary_sensor.hallway01_motion
+doors_kitchen:
+  name: Dør/Vindu Kjøkken
+  entities:
+    - binary_sensor.kitchen_door
+    - binary_sensor.kitchen_door_sliding

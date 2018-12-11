@@ -4,7 +4,11 @@
 resources:
   - url: /local/slider-entity-row.js
     type: js
-
+  - url: /local/state-switch.js
+    type: js
+  - url: /local/fold-entity-row.js
+    type: js
+  
 title: Home
 views:
   - id: 0  # Automatically created id
@@ -118,70 +122,68 @@ views:
 #      - id: c7f6d92350bb4ad3b08b8e7b88a2b35a  # Automatically created id
 #        type: vertical-stack
 #        cards:
-      - id: b5fee1124ef348f986f940c1c51ede6c  # Automatically created id
-        type: conditional
-        conditions:
-          - entity: input_boolean.kitchen_auto
-            state: off
-        card:
-          type: entities
-          title: Lys
-          show_header_toggle: false
-          entities:
-            - entity: input_boolean.kitchen_auto
-              name: Automatisk
-            - entity: light.kitchen_overlight
-              type: custom:slider-entity-row
-              show_value: true
-            - entity: light.kitchen_bench
-              type: custom:slider-entity-row
-              show_value: true
-            - entity: light.kitchen_wire
-              type: custom:slider-entity-row
-              show_value: true
-            - entity: light.kitchen_diningtable
-              type: custom:slider-entity-row
-              show_value: true
-              toggle: true
-      - id: 53f4612896e940229b6e7c18dc69ab08  # Automatically created id
-        type: conditional
-        conditions:
-          - entity: input_boolean.kitchen_auto
-            state: on
-        card:
-          type: entities
-          title: Lys
-          show_header_toggle: false
-          entities:
-            - entity: input_boolean.kitchen_auto
-              name: Automatisk
-            - entity: light.kitchen_diningtable
-            - entity: light.kitchen_diningtable
-              type: custom:slider-entity-row
-              show_value: true
-              full_row: true
+      - type: custom:state-switch
+        entity: input_boolean.kitchen_auto
+        states:
+          "on":
+            type: entities
+            title: Lys
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.kitchen_auto
+                name: Automatisk
+              - entity: light.kitchen_diningtable
+              - entity: light.kitchen_diningtable
+                type: custom:slider-entity-row
+                show_value: true
+                full_row: true
+          "off":
+            type: entities
+            title: Lys
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.kitchen_auto
+                name: Automatisk
+              - entity: light.kitchen_overlight
+                type: custom:slider-entity-row
+                show_value: true
+              - entity: light.kitchen_bench
+                type: custom:slider-entity-row
+                show_value: true
+              - entity: light.kitchen_wire
+                type: custom:slider-entity-row
+                show_value: true
+              - entity: light.kitchen_diningtable
+                type: custom:slider-entity-row
+                show_value: true
+                toggle: true                  
       - id: a58cdb067ced4946b0a388d7d7152274  # Automatically created id
-        type: glance
-        column_width: 100px
+        type: entities
+        show_header_toggle: false
         entities:
-          - entity: climate.kitchen_heating
-            name: Varmekabler
-          - entity: sensor.kitchen_temperature
-            name: Temp
-          - entity: sensor.netatmo_kitchen_co2
-            name: CO2
-          - entity: sensor.kitchen_humidity
-            name: Rel. fuktighet
-          - entity: sensor.netatmo_kitchen_noise
-            name: Lydnivå
-          - entity: sensor.kitchen_illuminance
-            name: Lysstyrke
-          - entity: group.motion_kitchen
-            name: Bevegelse
-          - entity: binary_sensor.kitchen_door
-            name: Dør
-          - entity: binary_sensor.kitchen_door_sliding
-            name: Skyvedør
+          - type: custom:fold-entity-row
+            head: 
+              entity: sensor.kitchen_temperature
+              name: Klima
+            items:
+              - entity: climate.kitchen_heating
+                name: Varmekabler
+              - entity: sensor.netatmo_kitchen_co2
+                name: CO2
+              - entity: sensor.kitchen_humidity
+                name: Rel. fuktighet
+              - entity: sensor.netatmo_kitchen_noise
+                name: Lydnivå
+              - entity: sensor.kitchen_illuminance
+                name: Lysstyrke
+          - type: custom:fold-entity-row
+            head: 
+              entity: group.motion_kitchen
+              name: Bevegelse
+          - type: custom:fold-entity-row
+            head: 
+              entity: group.doors_kitchen
+              name: Dør / Vindu
           - entity: media_player.kitchen
             name: Sonos
   - title: Gjesterom/bad
@@ -302,55 +304,40 @@ views:
     # Optional unique id for direct access /lovelace/${id}
     id: livingroom
     icon: mdi:sofa
-#    panel: true
-    # Each view can have a different theme applied.
-    theme: dark-mode
-    # The cards to show on this view.
     cards:
-#      - id: ff3c53f23fd6465d81e4f1e57d85567a  # Automatically created id
-#        type: vertical-stack
-#        cards:
-      - id: 1dc0926aef5547a9807563ec9ff27631  # Automatically created id
-        type: conditional
-        conditions:
-          - entity: input_boolean.livingroom_auto
-            state: on
-        card:
-          type: entities
-          title: Lys
-          show_header_toggle: false
-          entities:
-            - entity: input_boolean.livingroom_auto
-              name: Automatisk
-            - entity: light.livingroom_outside
-              name: Utelys
-            - entity: light.livingroom_outside
-              name: Utelys
-              type: custom:slider-entity-row
-              full_row: true
-      - id: f82820017cc447e19b9f7ec557a6a30b  # Automatically created id
-        type: conditional
-        conditions:
-          - entity: input_boolean.livingroom_auto
-            state: off
-        card:
-          type: entities
-          title: Lys
-          show_header_toggle: false
-          entities:
-            - entity: input_boolean.livingroom_auto
-              name: Automatisk
-            - entity: light.livingroom_roof
-              name: Tak
-            - entity: light.livingroom_radiohus
-              name: Radiohus
-            - entity: light.livingroom_walkway
-              name: Gang
-            - entity: light.livingroom_outside
-              name: Utelys
-              type: custom:slider-entity-row
-              show_value: true
-
+      - type: custom:state-switch
+        entity: input_boolean.livingroom_auto
+        states:
+          "on":
+            type: entities
+            title: Lys
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.livingroom_auto
+                name: Automatisk
+              - entity: light.livingroom_outside
+                name: Utelys
+              - entity: light.livingroom_outside
+                name: Utelys
+                type: custom:slider-entity-row
+                full_row: true
+          "off":
+            type: entities
+            title: Lys
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.livingroom_auto
+                name: Automatisk
+              - entity: light.livingroom_roof
+                name: Tak
+              - entity: light.livingroom_radiohus
+                name: Radiohus
+              - entity: light.livingroom_walkway
+                name: Gang
+              - entity: light.livingroom_outside
+                name: Utelys
+                type: custom:slider-entity-row
+                show_value: true
       - id: c45f254e32ec4c729f281b679b774c86  # Automatically created id
         type: glance
         column_width: calc(100% / 5)
@@ -411,53 +398,38 @@ views:
               - entity: sensor.bedroom_illuminance
                 name: Lysstyrke
   - title: Bad
-    # Optional unique id for direct access /lovelace/${id}
     id: bathroom
     icon: mdi:shower
-#    panel: true
-    # Each view can have a different theme applied.
-    theme: dark-mode
-    # The cards to show on this view.
     cards:
-#      - id: 49354daa7c9f43848ec42273630627cc  # Automatically created id
-#        type: vertical-stack
-#        cards:
-      - id: 56bd798652c1475faf2688cdcbbe5b2a  # Automatically created id
-        type: conditional
-        conditions:
-          - entity: input_boolean.bathroom_auto
-            state: on
-        card:
-          type: entities
-          title: Lys
-          show_header_toggle: false
-          entities:
-            - entity: input_boolean.bathroom_auto
-              name: Automatisk
-      - id: 2b3395c4f0274867ad1eb5321490f079  # Automatically created id
-        type: conditional
-        conditions:
-          - entity: input_boolean.bathroom_auto
-            state: off
-        card:
-          type: entities
-          title: Lys
-          show_header_toggle: false
-          entities:
-            - entity: input_boolean.bathroom_auto
-              name: Automatisk
-            - entity: light.bathroom_mirror
-              name: Speil
-              type: custom:slider-entity-row
-              show_value: true
-            - entity: light.bathroom_roof
-              name: Taklys
-              type: custom:slider-entity-row
-              show_value: true
-            - entity: light.bathroom_overlight
-              name: Overlys
-              type: custom:slider-entity-row
-              show_value: true
+      - type: custom:state-switch
+        entity: input_boolean.bathroom_auto
+        states:
+          "on":
+            type: entities
+            title: Lys
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.bathroom_auto
+                name: Automatisk
+          "off":
+            type: entities
+            title: Lys
+            show_header_toggle: false
+            entities:
+              - entity: input_boolean.bathroom_auto
+                name: Automatisk
+              - entity: light.bathroom_mirror
+                name: Speil
+                type: custom:slider-entity-row
+                show_value: true
+              - entity: light.bathroom_roof
+                name: Taklys
+                type: custom:slider-entity-row
+                show_value: true
+              - entity: light.bathroom_overlight
+                name: Overlys
+                type: custom:slider-entity-row
+                show_value: true
       - id: a89bd02f12d84173ad8b0e1aafd00b45  # Automatically created id
         type: glance
         column_width: calc(100% / 4)
@@ -473,13 +445,9 @@ views:
           - entity: sensor.bathroom_illuminance
             name: Lysstyrke
   - title: Soverom Olav
-    # Optional unique id for direct access /lovelace/${id}
     id: bedroomolav
     panel: true
     icon: mdi:castle
-    # Each view can have a different theme applied.
-    theme: dark-mode
-    # The cards to show on this view.
     cards:
       - id: 9ad24a9da01b44dab67c9b491ce08308  # Automatically created id
         type: vertical-stack
@@ -522,44 +490,28 @@ views:
                   - entity: light.bedroomolav_roof_02
                     name: Tak Høyre
   - title: Lekerom
-    # Optional unique id for direct access /lovelace/${id}
     id: playroom
     icon: mdi:gamepad-variant
-    panel: true
-    # Each view can have a different theme applied.
-    theme: dark-mode
-    # The cards to show on this view.
     cards:
-      - id: f1f84ca223cd40329955fb70cb2808e9  # Automatically created id
-        type: vertical-stack
-        cards:
-          - type: glance
-            column_width: calc(100% / 4)
-            entities:
-              - entity: sensor.playroom_temperature
-                name: Temp
-              - entity: sensor.playroom_humidity
-                name: Rel. fuktighet
-              - entity: binary_sensor.playroom_motion
-                name: Bevegelse
-              - entity: sensor.playroom_illuminance
-                name: Lysstyrke
-          - type: horizontal-stack
-            cards:
-              - type: entities
-                title: Varme
-                entities:
-                  - entity: climate.playroom_heating
-                    name: Varmekabler
-                  - sensor.playroom_heating_power
-                  - sensor.playroom_heating_consumption
-              - type: entities
-                title: Lys
-                show_header_toggle: false
-                entities:
-                  - input_boolean.playroom_auto
-                  - entity: light.playroom_wire
-                    name: Wire
+      - type: entities
+        title: Lys
+        show_header_toggle: false
+        entities:
+          - input_boolean.playroom_auto
+          - entity: light.playroom_wire
+            name: Wire
+      - type: glance
+        column_width: calc(100% / 4)
+        entities:
+          - entity: sensor.playroom_temperature
+            name: Temp
+          - entity: sensor.playroom_humidity
+            name: Rel. fuktighet
+          - entity: binary_sensor.playroom_motion
+            name: Bevegelse
+          - entity: sensor.playroom_illuminance
+            name: Lysstyrke
+
   - title: Vaskerom
     # Optional unique id for direct access /lovelace/${id}
     id: laundry
@@ -572,6 +524,12 @@ views:
       - id: 94a5498d94c24f99bf077a71451f001f  # Automatically created id
         type: vertical-stack
         cards:
+          - type: entities
+            title: Lys
+            show_header_toggle: false
+            entities:
+              - input_boolean.laundry_auto
+              - light.laundry_wire
           - type: glance
             column_width: calc(100% / 5)
             entities:
@@ -585,22 +543,7 @@ views:
                 name: Dør
               - entity: sensor.workshop_iluminnance
                 name: Lysstyrke
-          - type: horizontal-stack
-            cards:
-              - type: entities
-                title: Varme
-                entities:
-                  - entity: climate.laundry_heating
-                    secondary_info: last-changed
-                    name: Varmekabel
-                  - sensor.laundry_heating_power
-                  - sensor.laundry_heating_consumption
-              - type: entities
-                title: Lys
-                show_header_toggle: false
-                entities:
-                  - input_boolean.laundry_auto
-                  - light.laundry_wire
+
   - title: Verksted
     # Optional unique id for direct access /lovelace/${id}
     id: workshop

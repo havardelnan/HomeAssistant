@@ -272,7 +272,7 @@ notify:
     notify:
   - platform: html5
     name: HomeAssistant
-    gcm_api_key: !secret google_api_key
+    gcm_api_key: !secret google_sender_api_key
     gcm_sender_id: !secret google_sender_id
 
 mqtt_statestream:

@@ -44,6 +44,9 @@
       entity_id: input_boolean.tod_ad
     - service: input_boolean.turn_off
       entity_id: input_boolean.tod_day
+    - service: frontend.set_theme
+      data:
+        name: midnight
     
 - id: auto_set_tod_night
   alias: Set time of day night and cleanup
@@ -58,6 +61,9 @@
         - input_boolean.tod_ad
         - input_boolean.tod_day
         - input_boolean.tod_morning
+    - service: frontend.set_theme
+      data:
+        name: midnight
 
 - id: auto_set_tod_morning
   alias: Set time of day morning
@@ -73,6 +79,10 @@
       entity_id: input_boolean.tod_morning
     - service: input_boolean.turn_off
       entity_id: input_boolean.tod_night
+    - service: frontend.set_theme
+      data:
+        name: default
+    
       
 - id: auto_set_tod_day
   alias: Set time of day day
@@ -87,6 +97,9 @@
       entity_id: 
         - input_boolean.tod_morning
         - input_boolean.tod_night
+    - service: frontend.set_theme
+      data:
+        name: default
         
 
 ###############

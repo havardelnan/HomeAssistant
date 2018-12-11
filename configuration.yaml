@@ -40,6 +40,7 @@ homeassistant:
       device_class: illuminance
 
 frontend:
+  themes: !include_dir_merge_named themes
 
 config:
 
@@ -200,8 +201,6 @@ camera:
     key: !secret nvr_key
     password: !secret nvr_password
 
-openuv:
-  api_key: !secret openuv_api_key
 
 ffmpeg:
 
@@ -270,6 +269,11 @@ notify:
   - name: pushbullet_notify
     platform: pushbullet
     api_key: !secret pushbullet_api_key
+    notify:
+  - platform: html5
+    name: HomeAssistant
+    gcm_api_key: !secret google_api_key
+    gcm_sender_id: !secret google_sender_id
 
 mqtt_statestream:
   base_topic: homeassistant

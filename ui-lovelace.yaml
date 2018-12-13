@@ -61,6 +61,12 @@ views:
         show_name: false
         show_state: false
         tap_action: dialog
+      - type: iframe
+        url: 'https://rognervegen4.elnan.do/grafana/d-solo/WKRmbWxiz/rognervegen-4?refresh=1m&orgId=1&panelId=15&from=now-1d/d&to=now'
+      - type: iframe
+        url: 'https://rognervegen4.elnan.do/grafana/d-solo/WKRmbWxiz/rognervegen-4?refresh=1m&panelId=21&orgId=1&from=now/d&to=now'
+      - type: iframe
+        url: 'https://rognervegen4.elnan.do/grafana/d-solo/WKRmbWxiz/rognervegen-4?refresh=1m&orgId=1&panelId=19&from=now/d&to=now'
       - id: 44293d0ea74b4334a828c865ca5abca2  # Automatically created id
         type: entities
         title: Dører
@@ -597,21 +603,6 @@ views:
   - id: 10  # Automatically created id
     title: Zwave
     cards:
-      - id: bd3461df65884758a8a0e44c0c62fc31  # Automatically created id
-        type: entities
-        title: Zwave Dimmere
-        show_header_toggle: true
-        entities:
-          - zwave.aeotec_zw111_nano_dimmer
-          - zwave.aeotec_zw111_nano_dimmer_10
-          - zwave.aeotec_zw111_nano_dimmer_11
-          - zwave.aeotec_zw111_nano_dimmer_2
-          - zwave.aeotec_zw111_nano_dimmer_3
-          - zwave.aeotec_zw111_nano_dimmer_5
-          - zwave.aeotec_zw111_nano_dimmer_6
-          - zwave.aeotec_zw111_nano_dimmer_7
-          - zwave.aeotec_zw111_nano_dimmer_8
-          - zwave.aeotec_zw111_nano_dimmer_9
       - id: 80da396544ec4860912692d8b0c2148a  # Automatically created id
         type: entities
         title: Aktuatorer
@@ -663,22 +654,14 @@ views:
           - zwave.s09
           - zwave.s10
           - zwave.s11
-          - zwave.s12
           - zwave.s13
           - zwave.s14
           - zwave.s15
-          - zwave.s16
-          - zwave.s17
-          - zwave.s18
-          - zwave.s19
-          - zwave.s20
-          - zwave.s21
           - zwave.s22
           - zwave.s23
           - zwave.s24
           - zwave.s25
           - zwave.s26
-          - zwave.s27
           - zwave.s28
           - zwave.s29
           - zwave.s30
@@ -699,7 +682,6 @@ views:
           - sensor.s09_battery
           - sensor.s10_battery
           - sensor.s11_battery
-          - sensor.s12_battery
           - sensor.s13_battery
           - sensor.s14_battery
           - sensor.s15_battery

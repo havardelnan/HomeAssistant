@@ -1,4 +1,5 @@
 - id: set_powerconsumptionheating
+  alias: Set powerconsumtionheating
   trigger: 
     platform: time
     minutes: '/10'
@@ -8,8 +9,17 @@
     data_template:
       entity_id: input_number.powerconsumptionheating
       value: "{{((states.sensor.power_heating.state | int / 10) | round(0)) | int * 10}}"
-
-
+- id: set_pricepowerconsumptionheating
+  alias: Set price powerconsumptionheating
+  trigger: 
+    platform: time
+    minutes: '/10'
+    seconds: 30
+  action:
+    service: input_number.set_value
+    data_template:
+      entity_id: input_number.pricepowerconsumptionheating
+      value: "{{(((states.sensor.power_heating.state | int / 60) | round(0)) | int * 10) *  ((states.sensor.electricity_price_rognervegen_4a.state | float) + (states.input_number.pricepowerconsumptionnettleie.state | float))/1000}}"
 - id: test_workshop_switch_on
   alias: Test slå på
   trigger:

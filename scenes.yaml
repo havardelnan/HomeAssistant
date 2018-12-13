@@ -79,9 +79,9 @@
         transition: 2
   - name: livingroom_ad_dim
     entities:
-      light.livingroom_roof:
+      light.livingroom_radiohus:
         state: on
-        brightness: 60
+        brightness: 20
         transition: 2
   - name: livingroom_ad_light
     entities:

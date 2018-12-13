@@ -138,10 +138,19 @@ weather:
 
 input_number:
   powerconsumptionheating:
-    name: Slider
+    name: PowerHeating
     min: 0
     max: 60000
-
+  pricepowerconsumptionheating:
+    name: PowerPrice
+    min: 0
+    max: 50
+  pricepowerconsumptionnettleie:
+    name: PowerNettleie
+    min: 0
+    max: 1 
+    step: 0.001
+    mode: box
 tibber:
   access_token: !secret tibber_access_token
 

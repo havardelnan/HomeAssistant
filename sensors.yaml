@@ -228,6 +228,11 @@
         value_template: '{{ states.zwave.s31.attributes.battery_level }}'
         unit_of_measurement: '%'
         device_class: battery
+      nettleie:
+        friendly_name: "Nettleie Trønderenergi Nett"
+        unit_of_measurement: 'NOK/kWh'
+        icon_template: "mdi-home-currency-usd"
+        value_template: "{{0.416 | float}}"
   - platform: ring
   - platform: moon
   - platform: netatmo

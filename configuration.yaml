@@ -149,6 +149,7 @@ input_number:
 tibber:
   access_token: !secret tibber_access_token
 
+
 light:
   - platform: group
     name: bathroom_roof
@@ -157,14 +158,23 @@ light:
       - light.bathroom_02
       - light.bathroom_03
       - light.bathroom_04
+
   - platform: group
     name: workshop_roof
     entities:
       - light.workshop_roof01
       - light.workshop_roof02
+      
+  - platform: template
+    lights:
+      dashboard_screen:
+        turn_on:
+        turn_off:
+        set_level:
+
 
 binary_sensor:
-  - platform: ring
+#  - platform: ring
   - platform: template
     sensors:
       livingroom_motion_combined:
@@ -180,6 +190,9 @@ binary_sensor:
   - platform: workday
     country: "NO"
     workdays: [mon, tue, wed, thu, fri]
+  - platform: mqtt
+    name: dashboard_motion
+    state_topic: any/value
     
 input_select:
   guestbedroom_mode:
@@ -204,6 +217,9 @@ camera:
     key: !secret nvr_key
     password: !secret nvr_password
 
+  - name: tablet_gang
+    platform: generic
+    still_image_url: !secret tablet_gang_url
 
 ffmpeg:
 
@@ -220,9 +236,9 @@ netatmo:
   username: !secret netatmo_username
   password: !secret netatmo_password
 
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
+#ring:
+#  username: !secret ring_username
+#  password: !secret ring_password
 
 tts:
   - platform: google

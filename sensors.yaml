@@ -233,8 +233,11 @@
         unit_of_measurement: 'NOK/kWh'
         icon_template: "mdi-home-currency-usd"
         value_template: "{{0.416 | float}}"
-  - platform: ring
+
+#  - platform: ring
+
   - platform: moon
+
   - platform: netatmo
     modules:
       Kitchen:
@@ -251,6 +254,7 @@
         - min_temp
         - rf_status
         - battery_vp
+
   - platform: netatmo_public
     areas:
       - lat_ne: 63.415
@@ -262,29 +266,30 @@
           - pressure
           - humidity
           - rain
-          - windstrength
-          - guststrength
+#          - windstrength
+#          - guststrength
+
   - platform: google_travel_time
     name: H_morning_comute
     api_key: !secret google_api_key
     origin: zone.home
     destination: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
-    travel_mode: driving
     scan_interval: 3600
     options:
       avoid: tolls
+      mode: driving
+
   - platform: google_travel_time
     name: H_evening_comute
     api_key: !secret google_api_key
     origin: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
     destination: zone.home
-    travel_mode: driving
     scan_interval: 3600
     options:
       avoid: tolls
+      mode: driving
+
   - platform: entur_public_transport
-    name: Neste buss
-    expand_platforms: true
-    show_on_map: true
     stop_ids:
-      - 'SR:StopPlace:43061'
+      - 'NSR:StopPlace:43061'
+      - 'NSR:StopPlace:42500'

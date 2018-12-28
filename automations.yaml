@@ -57,6 +57,25 @@
     - service: frontend.set_theme
       data:
         name: midnight
+
+- id: auto_set_tod_ad
+  alias: Set time of day after dark
+  trigger:
+    platform: time
+    at: '15:00:00'
+  condition:
+    condition: numeric_state
+    entity_id: sun.sun
+    value_template: "{{ state.attributes.elevation }}"
+    below: 5.0
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.tod_ad
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.tod_day
+    - service: frontend.set_theme
+      data:
+        name: midnight
     
 - id: auto_set_tod_night
   alias: Set time of day night and cleanup
@@ -304,21 +323,24 @@
     entity_id: input_boolean.hall_auto
     state: 'on'
   action:
-    service: light.turn_on
-    data:
-      entity_id: 
-        - light.entrance
-    data_template:
-      brightness: >-
-        {% if is_state('input_boolean.tod_ad', 'on') %}
-        128
-        {% elif is_state('input_boolean.tod_night', 'on') %}
-        50
-        {% elif is_state('input_boolean.tod_day', 'on') %}
-        128
-        {% elif is_state('input_boolean.tod_morning', 'on') %}
-        128
-        {% endif %}
+    - service: light.turn_on
+      data:
+        entity_id: 
+          - light.entrance
+      data_template:
+        brightness: >-
+          {% if is_state('input_boolean.tod_ad', 'on') %}
+          128
+          {% elif is_state('input_boolean.tod_night', 'on') %}
+          50
+          {% elif is_state('input_boolean.tod_day', 'on') %}
+          128
+          {% elif is_state('input_boolean.tod_morning', 'on') %}
+          128
+          {% endif %}
+    - service: light.turn_on
+      entity_id:
+        - light.dashboard_screen
         
 - id: entrance_dim_after_movement
   alias: Dim entrance light 5 minutes after last movement
@@ -333,11 +355,14 @@
     entity_id: input_boolean.hall_auto
     state: 'on'
   action:
-    service: light.turn_on
-    data:
-      entity_id: 
-        - light.entrance
-      brightness: 3
+    - service: light.turn_on
+      data:
+        entity_id: 
+          - light.entrance
+        brightness: 3
+    - service: light.turn_off
+      entity_id:
+        - light.dashboard_screen
 
 ######################
 #                    #

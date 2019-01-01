@@ -232,7 +232,7 @@
         friendly_name: "Nettleie Trønderenergi Nett"
         unit_of_measurement: 'NOK/kWh'
         icon_template: "mdi-home-currency-usd"
-        value_template: "{{0.416 | float}}"
+        value_template: "{{0.429 | float}}"
 
 #  - platform: ring
 

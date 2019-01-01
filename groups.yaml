@@ -38,7 +38,7 @@ heating_switches:
 motion_kitchen:
   name: Bevegelse kjøkken
   entities:
-#    - binary_sensor.kitchen_01_motion
+    - binary_sensor.kitchen_01_motion
     - binary_sensor.kitchen_02_motion
     - binary_sensor.hallway01_motion
 doors_kitchen:

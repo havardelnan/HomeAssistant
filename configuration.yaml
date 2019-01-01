@@ -202,7 +202,7 @@ input_select:
      - Ikke gjester
      
 camera:
-  - platform: ring
+#  - platform: ring
 
   - platform: generic
     still_image_url: !secret meteogram_png_url

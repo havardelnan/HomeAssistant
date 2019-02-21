@@ -42,7 +42,7 @@ zone.verksted:
       uuid: 01234567-89AB-CDEF-0123-000000000001
       major: 1
       minor: 673
-zone.kjøkken:
+zone.kjokken:
     beacon:
       uuid: 01234567-89AB-CDEF-0123-000000000001
       major: 1

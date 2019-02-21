@@ -149,6 +149,10 @@ input_number:
 tibber:
   access_token: !secret tibber_access_token
 
+utility_meter:
+  energy:
+    source: sensor.accumulatedconsumption
+    cycle: daily
 
 light:
   - platform: group
@@ -171,7 +175,6 @@ light:
         turn_on:
         turn_off:
         set_level:
-
 
 binary_sensor:
 #  - platform: ring
@@ -283,7 +286,7 @@ media_player:
 notify:
   - platform: webostv
     host: 10.20.0.60
-    name: Living_Room_TV_notify
+    name: living_room_tv_notify
     filename: webostv.conf
   - name: pushbullet_notify
     platform: pushbullet

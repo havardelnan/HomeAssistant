@@ -233,7 +233,46 @@
         unit_of_measurement: 'NOK/kWh'
         icon_template: "mdi-home-currency-usd"
         value_template: "{{0.429 | float}}"
-
+      accumulatedconsumption:
+        friendly_name: "Dagens strømforbruk"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.accumulatedConsumption | float |round(2)}}"
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: 'kWh'
+      accumulatedcost:
+        friendly_name: "Dagens strømkostnad"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.accumulatedCost | float |round(2)}}"
+        icon_template: "mdi-home-currency-usd"
+        unit_of_measurement: "NOK"
+      minpower:
+        friendly_name: "Minimum forbruk"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.minPower | float |round(2)}}"
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: 'W'
+      averagepower:
+        friendly_name: "Gjennomsnitt forbruk"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.averagePower | float |round(2)}}"
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: 'W'
+      maxpower:
+        friendly_name: "Maks forbruk"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.maxPower | float |round(2)}}"
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: 'W'
+      voltagephase1:
+        friendly_name: "Spenning fase 1"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.voltagePhase1 | float |round(2)}}"
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: 'W'
+      voltagephase2:
+        friendly_name: "Spenning fase 2"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.voltagePhase2 | float |round(2)}}"
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: 'W'
+      voltagephase3:
+        friendly_name: "Spenning fase 3"
+        value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.voltagePhase3 | float |round(2)}}"
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: 'W'
 #  - platform: ring
 
   - platform: moon
@@ -293,3 +332,12 @@
     stop_ids:
       - 'NSR:StopPlace:43061'
       - 'NSR:StopPlace:42500'
+
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'

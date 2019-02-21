@@ -136,6 +136,11 @@ sun:
 weather:
   - platform: met
 
+person:
+
+air_quality:
+  - platform: norway_air
+
 input_number:
   powerconsumptionheating:
     name: PowerHeating

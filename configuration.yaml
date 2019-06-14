@@ -1,10 +1,10 @@
 homeassistant:
-  name: Rognervegen 4
-  latitude: !secret ha_latitude
-  longitude: !secret ha_longitude
-  elevation: 100
-  unit_system: metric
-  time_zone: Europe/Oslo
+  # name: Rognervegen 4
+  # latitude: !secret ha_latitude
+  # longitude: !secret ha_longitude
+  # elevation: 100
+  # unit_system: metric
+  # time_zone: Europe/Oslo
   customize: !include customize.yaml
   customize_glob:
     "sensor*exporting*":
@@ -38,29 +38,28 @@ homeassistant:
       device_class: door
     "sensor*illuminance":
       device_class: illuminance
-
+  auth_providers:
+      - type: trusted_networks
+        trusted_networks:
+          - 10.20.0.0/23
+      - type: homeassistant
 frontend:
   themes: !include_dir_merge_named themes
+  javascript_version: latest
 
 config:
 
 http:
   base_url: !secret base_url
   server_port: 4343
-  cors_allowed_origins:
-    - https://google.com
-    - https://www.home-assistant.io
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  ip_ban_enabled: True
+  login_attempts_threshold: 10
   use_x_forwarded_for: True
   trusted_proxies:
     - 127.0.0.1
-    - ::1
-  trusted_networks:
-    - 127.0.0.1
-    - ::1
-    - 10.20.0.0/23
-    - 2001:DB8:ABCD::/48
-  ip_ban_enabled: True
-  login_attempts_threshold: 5
+    - ::1  
 
 influxdb:
   host: 127.0.0.1
@@ -80,27 +79,6 @@ influxdb:
     instance: prod
     source: hass
     
-ios:
-  push:
-    categories:
-      - name: 'Movement detected'
-        identifier: 'Movement_detected'
-        actions:
-          - identifier: 'SOUND_ALARM'
-            title: 'Sound Alarm'
-            activationMode: 'background'
-            authenticationRequired: yes
-            destructive: yes
-            behavior: 'default'
-          - identifier: 'SILENCE_ALARM'
-            title: 'Silence Alarm'
-            activationMode: 'background'
-            authenticationRequired: yes
-            destructive: no
-            behavior: 'textInput'
-            textInputButtonTitle: 'Silencio!'
-            textInputPlaceholder: 'Placeholder'
-
 zone:
   - name: Verksted
     latitude: !secret ha_latitude
@@ -124,14 +102,30 @@ conversation:
 
 recorder:
   db_url: !secret recorder_db_url
+  include:
+    domains:
+      - sensor
+      - switch
+      - media_player
+      - climate
+      - light
 
 history:
+  include:
+    domains:
+      - sensor
+      - switch
+      - media_player
+      - climate
+      - light
 
 logbook:
 
 map:
 
 sun:
+
+default_config:
 
 weather:
   - platform: met
@@ -182,7 +176,7 @@ light:
         set_level:
 
 binary_sensor:
-#  - platform: ring
+  - platform: ring
   - platform: template
     sensors:
       livingroom_motion_combined:
@@ -201,7 +195,6 @@ binary_sensor:
   - platform: mqtt
     name: dashboard_motion
     state_topic: any/value
-    
 input_select:
   guestbedroom_mode:
     name: Gjesterom modus
@@ -210,7 +203,7 @@ input_select:
      - Ikke gjester
      
 camera:
-#  - platform: ring
+  - platform: ring
 
   - platform: generic
     still_image_url: !secret meteogram_png_url
@@ -219,11 +212,16 @@ camera:
   - platform: mjpeg
     name: Ultimaker 3
     mjpeg_url: http://ultimaker001.local.elnan.do:8080/?action=stream
-    
-  - platform: uvc
-    nvr: !secret nvr_ip
-    key: !secret nvr_key
-    password: !secret nvr_password
+
+  - platform: generic
+    name: Utendørs
+    still_image_url: !secret nvr_1_still_image_url
+    stream_source: !secret nvr_1_stream_source
+
+  - platform: generic
+    name: Verksted
+    still_image_url: !secret nvr_2_still_image_url
+    stream_source: !secret nvr_2_stream_source
 
   - name: tablet_gang
     platform: generic
@@ -231,7 +229,11 @@ camera:
 
 ffmpeg:
 
+stream:
+
 owntracks:
+
+mobile_app:
 
 zwave:
   usb_path: /dev/ttyACM0
@@ -244,12 +246,13 @@ netatmo:
   username: !secret netatmo_username
   password: !secret netatmo_password
 
-#ring:
-#  username: !secret ring_username
-#  password: !secret ring_password
+ring:
+  username: !secret ring_username
+  password: !secret ring_password
 
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
 
 cloud:
   google_actions:
@@ -302,6 +305,12 @@ notify:
     gcm_api_key: !secret google_sender_api_key
     gcm_sender_id: !secret google_sender_id
 
+vacuum:
+  - platform: roomba
+    host: !secret roomba_ip
+    username: !secret roomba_blid
+    password: !secret roomba_pwd
+
 mqtt_statestream:
   base_topic: homeassistant
   publish_attributes: true
@@ -328,6 +337,23 @@ switch:
     optimistic: false
     qos: 0
     retain: true
+    
+device_tracker:
+  - platform: cisco_mobility_express
+    host: !secret mobilityexpress_host
+    username: !secret mobilityexpress_user
+    password: !secret mobilityexpress_pass
+    ssl: true
+    verify_ssl: false
+
+speedtestdotnet:
+  scan_interval:
+    minutes: 30
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+
     
 climate: !include climate.yaml
 scene: !include scenes.yaml

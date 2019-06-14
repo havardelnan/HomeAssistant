@@ -18,6 +18,16 @@
           (states.sensor.workshop_heating_power.state | int))
           }}
         unit_of_measurement: 'W'
+      kitchen_heating_cost:
+        friendly_name: "Forbruk Oppvarming Kjøkken"
+        value_template: >
+          {{
+          (
+          ((states("sensor.kitchen_heating_energy") | float) - (states("sensor.kitchen_heating_energy_prev") | float)) *
+          ((states.sensor.electricity_price_rognervegen_4a.state | float) + (states.sensor.nettleie.state | float))
+          )| round(4)
+          }}
+        unit_of_measurement: 'NOK'
       bedroom_window_left:
         friendly_name: 'Venstre vindu'
         value_template: >
@@ -294,7 +304,7 @@
         - rf_status
         - battery_vp
 
-  - platform: netatmo_public
+  - platform: netatmo
     areas:
       - lat_ne: 63.415
         lon_ne: 10.375
@@ -341,3 +351,13 @@
       - 'time_date'
       - 'time_utc'
       - 'beat'
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /
+      - type: memory_free
+      - type: load_1m
+      - type: load_5m
+  - platform: mqtt
+    name: fbmessenger
+    state_topic: "test/fb"

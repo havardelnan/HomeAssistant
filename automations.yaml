@@ -61,6 +61,32 @@
       data:
         name: midnight
 
+- id: auto_set_tod_ad_light
+  alias: Set time of day after dark when light is low
+  initial_state: true
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.outdoor_light_level
+    below: 2500
+    for:
+      minutes: 10
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.tod_day
+        state: 'on'
+      - condition: time
+        after: '15:00:00'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.tod_ad
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.tod_day
+    - service: frontend.set_theme
+      data:
+        name: midnight
+
 - id: auto_set_tod_ad_15
   alias: Set time of day after dark 1500
   initial_state: true
@@ -68,10 +94,16 @@
     platform: time
     at: '15:00:00'
   condition:
-    condition: numeric_state
-    entity_id: sun.sun
-    value_template: "{{ state.attributes.elevation }}"
-    below: 5.0
+    condition: or
+    conditions:
+      - condition: numeric_state
+        entity_id: sun.sun
+        value_template: "{{ state.attributes.elevation }}"
+        below: 5.0
+      - condition: numeric_state
+        entity_id: sensor.outdoor_light_level
+        below: 2500
+    
   action:
     - service: input_boolean.turn_on
       entity_id: input_boolean.tod_ad
@@ -575,7 +607,7 @@
 
 - id: startup_initial
   alias: Startup cleanup
-  initial_state: true
+  initial_state: false
   trigger:
     platform: homeassistant
     event: start
@@ -614,7 +646,7 @@
         - thu
         - fri
   action:
-    - service: sensor.google_travel_sensor_update
+    - service: homeassistant.update_entity
       data:
         entity_id: sensor.H_morning_comute
         
@@ -637,6 +669,6 @@
         - thu
         - fri
   action:
-    - service: sensor.google_travel_sensor_update
+    - service: homeassistant.update_entity
       data:
         entity_id: sensor.H_evening_comute

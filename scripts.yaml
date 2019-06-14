@@ -232,3 +232,39 @@
       - service: light.turn_off
         data:
           entity_id: light.bedroom_overlight
+  set_light_cleaning:
+    alias: Set light cleaning
+    sequence:
+      - service: homeassistant.turn_off
+        entity_id:
+          - input_boolean.kitchen_auto
+          - input_boolean.livingroom_auto
+          - input_boolean.bedroom_auto
+          - input_boolean.bathroom_auto
+          - input_boolean.guestbathroom_auto
+          - input_boolean.guestbedroom_auto
+          - input_boolean.hall_auto
+          - input_boolean.walkway_auto
+          - input_boolean.playroom_auto
+          - input_boolean.kidsbedroom_auto
+          - input_boolean.laundry_auto
+          - input_boolean.workshop_auto
+      - service: light.turn_on
+        data:
+          entity_id:
+            - light.kitchen_bench
+            - light.kitchen_wire
+            - light.kitchen_diningtable
+            - light.bathroom_roof
+            - light.playroom_wire
+            - light.bedroom_roof
+            - light.guestbedroom
+            - light.entrance_inner
+            - light.guestbathroom_rail
+            - light.livingroom_radiohus
+            - light.livingroom_roof
+            - light.entrance
+            - light.bedroomolav_roof_01
+            - light.bedroomolav_roof_02
+            - light.laundry_wire
+          brightness_pct: 99

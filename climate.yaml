@@ -10,8 +10,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: Entrance heating
@@ -25,8 +28,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: Guestbathroom heating
@@ -40,8 +46,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: Guestbedroom heating
@@ -55,8 +64,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: Livingroom Heating
@@ -70,8 +82,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: bedroom heating
@@ -85,8 +100,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 5
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: Bathroom Heating
@@ -100,8 +118,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: Bedroomolav heating 01
@@ -115,8 +136,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: Bedroomolav heating 02
@@ -130,8 +154,11 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
 
   - platform: generic_thermostat
     name: playroom heating
@@ -145,8 +172,12 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
+
   - platform: generic_thermostat
     name: laundry heating
     heater: switch.laundry_heating
@@ -159,8 +190,12 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1
+
   - platform: generic_thermostat
     name: workshop heating
     heater: switch.workshop_heating
@@ -173,5 +208,8 @@
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    initial_operation_mode: "auto"
     away_temp: 16
+    keep_alive:
+      minutes: 3
+    initial_hvac_mode: "heat"
+    precision: 0.1

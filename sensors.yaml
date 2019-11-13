@@ -202,6 +202,10 @@
         value_template: '{{ states.zwave.s15.attributes.battery_level }}'
         unit_of_measurement: '%'
         device_class: battery
+      s21_battery:
+        value_template: '{{ states.zwave.s22.attributes.battery_level }}'
+        unit_of_measurement: '%'
+        device_class: battery
       s22_battery:
         value_template: '{{ states.zwave.s22.attributes.battery_level }}'
         unit_of_measurement: '%'
@@ -283,26 +287,28 @@
         value_template: "{{states.sensor.real_time_consumption_rognervegen_4a.attributes.voltagePhase3 | float |round(2)}}"
         icon_template: "mdi-power-plug"
         unit_of_measurement: 'W'
+      electricitypricelevel:
+        friendly_name: "Prisnivå strøm"
+        value_template: >
+          {% if states.sensor.electricity_price_rognervegen_4a.attributes.price_level == "NORMAL" -%}
+            3
+          {%- elif states.sensor.electricity_price_rognervegen_4a.attributes.price_level == "CHEAP" -%}
+          2
+          {%- elif states.sensor.electricity_price_rognervegen_4a.attributes.price_level == "VERY_CHEAP" -%}
+          1
+          {%- elif states.sensor.electricity_price_rognervegen_4a.attributes.price_level == "EXPENSIVE" -%}
+          4
+          {%- elif states.sensor.electricity_price_rognervegen_4a.attributes.price_level == "VERY_EXPENSIVE" -%}
+          5
+          {% else -%}
+          0
+          {%- endif %}
+        icon_template: "mdi-power-plug"
+        unit_of_measurement: ''
+
 #  - platform: ring
 
   - platform: moon
-
-  - platform: netatmo
-    modules:
-      Kitchen:
-        - temperature
-        - co2
-        - humidity
-        - noise
-        - pressure
-        - wifi_status
-      Outdoor:
-        - temperature
-        - humidity
-        - max_temp
-        - min_temp
-        - rf_status
-        - battery_vp
 
   - platform: netatmo
     areas:
@@ -310,33 +316,26 @@
         lon_ne: 10.375
         lat_sw: 63.409
         lon_sw: 10.359
-        monitored_conditions:
-          - temperature
-          - pressure
-          - humidity
-          - rain
-#          - windstrength
-#          - guststrength
 
-  - platform: google_travel_time
-    name: H_morning_comute
-    api_key: !secret google_api_key
-    origin: zone.home
-    destination: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
-    scan_interval: 3600
-    options:
-      avoid: tolls
-      mode: driving
+  # - platform: google_travel_time
+  #   name: H_morning_comute
+  #   api_key: !secret google_api_key
+  #   origin: zone.home
+  #   destination: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
+  #   scan_interval: 3600
+  #   options:
+  #     avoid: tolls
+  #     mode: driving
 
-  - platform: google_travel_time
-    name: H_evening_comute
-    api_key: !secret google_api_key
-    origin: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
-    destination: zone.home
-    scan_interval: 3600
-    options:
-      avoid: tolls
-      mode: driving
+  # - platform: google_travel_time
+  #   name: H_evening_comute
+  #   api_key: !secret google_api_key
+  #   origin: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
+  #   destination: zone.home
+  #   scan_interval: 3600
+  #   options:
+  #     avoid: tolls
+  #     mode: driving
 
   - platform: entur_public_transport
     stop_ids:

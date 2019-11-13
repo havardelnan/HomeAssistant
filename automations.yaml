@@ -59,7 +59,7 @@
       entity_id: input_boolean.tod_day
     - service: frontend.set_theme
       data:
-        name: midnight
+        name: homekit-dark
 
 - id: auto_set_tod_ad_light
   alias: Set time of day after dark when light is low
@@ -85,7 +85,7 @@
       entity_id: input_boolean.tod_day
     - service: frontend.set_theme
       data:
-        name: midnight
+        name: homekit-dark
 
 - id: auto_set_tod_ad_15
   alias: Set time of day after dark 1500
@@ -111,7 +111,7 @@
       entity_id: input_boolean.tod_day
     - service: frontend.set_theme
       data:
-        name: midnight
+        name: homekit-dark
     
 - id: auto_set_tod_night
   alias: Set time of day night and cleanup
@@ -129,7 +129,7 @@
         - input_boolean.tod_morning
     - service: frontend.set_theme
       data:
-        name: midnight
+        name: homekit-dark
 
 - id: auto_set_tod_morning
   alias: Set time of day morning
@@ -148,7 +148,7 @@
       entity_id: input_boolean.tod_night
     - service: frontend.set_theme
       data:
-        name: default
+        name: homekit-light
     
       
 - id: auto_set_tod_day
@@ -167,7 +167,7 @@
         - input_boolean.tod_night
     - service: frontend.set_theme
       data:
-        name: default
+        name: homekit-light
         
 
 ###############
@@ -176,119 +176,113 @@
 #             #
 ###############
 
-- id: kitchen_turn_on_light_dimmed_ad
-  alias: Kjøkken - Slå på lys dimmet når det blir kveld
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: input_boolean.tod_ad
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.kitchen_auto
-        state: 'on'
-      - condition: state
-        entity_id: group.motion_kitchen
-        state: 'off'        
-  action:
-    service: script.turn_on
-    entity_id: script.kitchen_light_dimmed
+# - id: kitchen_turn_on_light_dimmed_ad
+#   alias: Kjøkken - Slå på lys dimmet når det blir kveld
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.tod_ad
+#     to: 'on'
+#   condition:
+#     condition: and
+#     conditions:
+#       - condition: state
+#         entity_id: input_boolean.kitchen_auto
+#         state: 'on'
+#       - condition: state
+#         entity_id: group.motion_kitchen
+#         state: 'off'        
+#   action:
+#     service: script.turn_on
+#     entity_id: script.kitchen_light_dimmed
 
-- id: kitchen_turn_on_light_ad
-  alias: Kjøkken - Slå på lys når det blir kveld
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: input_boolean.tod_ad
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.kitchen_auto
-        state: 'on'
-      - condition: state
-        entity_id: group.motion_kitchen
-        state: 'on'        
-  action:
-    service: script.turn_on
-    entity_id: script.kitchen_light_on
+# - id: kitchen_turn_on_light_ad
+#   alias: Kjøkken - Slå på lys når det blir kveld
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.tod_ad
+#     to: 'on'
+#   condition:
+#     condition: and
+#     conditions:
+#       - condition: state
+#         entity_id: input_boolean.kitchen_auto
+#         state: 'on'
+#       - condition: state
+#         entity_id: group.motion_kitchen
+#         state: 'on'        
+#   action:
+#     service: script.turn_on
+#     entity_id: script.kitchen_light_on
 
-- id: kitchen_turn_on_light_movement
-  alias: Kjøkken - Slå på lys når det er bevegelse
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: group.motion_kitchen
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.kitchen_auto
-        state: 'on'
-  action:
-    - service: script.turn_on
-      entity_id: script.kitchen_light_on
-#    - service: input_boolean.turn_on
-#      entity_id: group.motion_kitchen
+# - id: kitchen_turn_on_light_movement
+#   alias: Kjøkken - Slå på lys når det er bevegelse
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: group.motion_kitchen
+#     to: 'on'
+#   condition:
+#     condition: and
+#     conditions:
+#       - condition: state
+#         entity_id: input_boolean.kitchen_auto
+#         state: 'on'
+#   action:
+#     - service: script.turn_on
+#       entity_id: script.kitchen_light_on
 
-- id: kitchen_turn_on_light_dimed_after_movement
-  alias: Kjøkken - Dim lys 15 minutter etter siste bevegelse
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.kitchen_motion_combined
-    to: 'off'
-    for:
-      minutes: 15
-  condition:
-    condition: and
-    conditions:
-      condition: state
-      entity_id: input_boolean.kitchen_auto
-      state: 'on'
-  action:
-    - service: script.turn_on
-      entity_id: script.kitchen_light_dimmed
-#    - service: input_boolean.turn_off
-#      entity_id: group.motion_kitchen
+# - id: kitchen_turn_on_dimmed_night
+#   alias: Kjøkken - Slå på lys dimmet når det blir natt
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.tod_night
+#     to: 'on'
+#   condition:
+#     condition: and
+#     conditions:
+#       - condition: state
+#         entity_id: input_boolean.kitchen_auto
+#         state: 'on'     
+#   action:
+#     service: script.turn_on
+#     entity_id: script.kitchen_light_dimmed
 
-- id: kitchen_turn_on_light_dimmed_auto
-  alias: Kjøkken - Slå på lys dimmet når modus endres til auto
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: input_boolean.kitchen_auto
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: group.motion_kitchen
-        state: 'off'        
-  action:
-    service: script.turn_on
-    entity_id: script.kitchen_light_dimmed
+# - id: kitchen_turn_on_light_dimmed_auto
+#   alias: Kjøkken - Slå på lys dimmet når modus endres til auto
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.kitchen_auto
+#     to: 'on'
+#   condition:
+#     condition: and
+#     conditions:
+#       - condition: state
+#         entity_id: group.motion_kitchen
+#         state: 'off'        
+#   action:
+#     service: script.turn_on
+#     entity_id: script.kitchen_light_dimmed
 
-- id: kitchen_turn_on_light_auto
-  alias: Kjøkken - Slå på lys når modus endres til auto
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: input_boolean.kitchen_auto
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: group.motion_kitchen
-        state: 'on'        
-  action:
-    service: script.turn_on
-    entity_id: script.kitchen_light_on
+# - id: kitchen_turn_on_light_auto
+#   alias: Kjøkken - Slå på lys når modus endres til auto
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.kitchen_auto
+#     to: 'on'
+#   condition:
+#     condition: and
+#     conditions:
+#       - condition: state
+#         entity_id: group.motion_kitchen
+#         state: 'on'        
+#   action:
+#     service: script.turn_on
+#     entity_id: script.kitchen_light_on
     
 ##################
 #                #
@@ -296,27 +290,27 @@
 #                #
 ##################
 
-- id: livingroom_turn_on_light_ad
-  alias: Stue - Slå på lys når det blir kveld
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: input_boolean.tod_ad
-    to: 'on'
-  action:
-    service: scene.turn_on
-    entity_id: scene.livingroom_ad_dim
+# - id: livingroom_turn_on_light_ad
+#   alias: Stue - Slå på lys når det blir kveld
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.tod_ad
+#     to: 'on'
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.livingroom_ad_dim
 
-- id: livingroom_turn_off_light_night
-  alias: Stue - Slå av lys når det blir natt
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: input_boolean.tod_ad
-    to: 'off'
-  action:
-    service: scene.turn_on
-    entity_id: scene.livingroom_ad_off
+# - id: livingroom_turn_off_light_night
+#   alias: Stue - Slå av lys når det blir natt
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.tod_ad
+#     to: 'off'
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.livingroom_ad_off
 
 ######################
 #                    #
@@ -627,48 +621,48 @@
       - input_boolean.laundry_auto
       - input_boolean.workshop_auto
       
-- id: update_morning_commute_sensor
-  alias: "Commute - Update morning commute sensor"
-  initial_state: 'on'
-  trigger:
-    - platform: time_pattern
-      minutes: '/5'
-      seconds: 00
-  condition:
-    - condition: time
-      after: '07:00:00'
-      before: '09:00:00'
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-  action:
-    - service: homeassistant.update_entity
-      data:
-        entity_id: sensor.H_morning_comute
+# - id: update_morning_commute_sensor
+#   alias: "Commute - Update morning commute sensor"
+#   initial_state: 'on'
+#   trigger:
+#     - platform: time_pattern
+#       minutes: '/5'
+#       seconds: 00
+#   condition:
+#     - condition: time
+#       after: '07:00:00'
+#       before: '09:00:00'
+#     - condition: time
+#       weekday:
+#         - mon
+#         - tue
+#         - wed
+#         - thu
+#         - fri
+#   action:
+#     - service: homeassistant.update_entity
+#       data:
+#         entity_id: sensor.H_morning_comute
         
-- id: update_evening_commute_sensor
-  alias: "Commute - Update evening commute sensor"
-  initial_state: 'on'
-  trigger:
-    - platform: time_pattern
-      minutes: '/5'
-      seconds: 00
-  condition:
-    - condition: time
-      after: '15:00:00'
-      before: '17:00:00'
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-  action:
-    - service: homeassistant.update_entity
-      data:
-        entity_id: sensor.H_evening_comute
+# - id: update_evening_commute_sensor
+#   alias: "Commute - Update evening commute sensor"
+#   initial_state: 'on'
+#   trigger:
+#     - platform: time_pattern
+#       minutes: '/5'
+#       seconds: 00
+#   condition:
+#     - condition: time
+#       after: '15:00:00'
+#       before: '17:00:00'
+#     - condition: time
+#       weekday:
+#         - mon
+#         - tue
+#         - wed
+#         - thu
+#         - fri
+#   action:
+#     - service: homeassistant.update_entity
+#       data:
+#         entity_id: sensor.H_evening_comute

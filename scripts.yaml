@@ -38,11 +38,11 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            15
+            25
             {% elif is_state('input_boolean.tod_night', 'on') %}
             0
             {% elif is_state('input_boolean.tod_day', 'on') %}
-            0
+            10
             {% elif is_state('input_boolean.tod_morning', 'on') %}
             10
             {% endif %}
@@ -57,7 +57,7 @@
             {% elif is_state('input_boolean.tod_night', 'on') %}
             0
             {% elif is_state('input_boolean.tod_day', 'on') %}
-            0
+            255
             {% elif is_state('input_boolean.tod_morning', 'on') %}
             255
             {% endif %}    
@@ -73,9 +73,9 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            8
+            50
             {% elif is_state('input_boolean.tod_night', 'on') %}
-            0
+            8
             {% elif is_state('input_boolean.tod_day', 'on') %}
             0
             {% elif is_state('input_boolean.tod_morning', 'on') %}
@@ -88,7 +88,7 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            8
+            50
             {% elif is_state('input_boolean.tod_night', 'on') %}
             0
             {% elif is_state('input_boolean.tod_day', 'on') %}
@@ -103,7 +103,7 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            0
+            12
             {% elif is_state('input_boolean.tod_night', 'on') %}
             0
             {% elif is_state('input_boolean.tod_day', 'on') %}
@@ -118,7 +118,7 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            0
+            255
             {% elif is_state('input_boolean.tod_night', 'on') %}
             0
             {% elif is_state('input_boolean.tod_day', 'on') %}
@@ -126,6 +126,40 @@
             {% elif is_state('input_boolean.tod_morning', 'on') %}
             0
             {% endif %}   
+
+  set_livingroom_lights:
+    alias: Set bathroom lights
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.livingroom_radiohus
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            20
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            0
+            {% endif %}    
+      - service: light.turn_on
+        data:
+          entity_id: 
+            - light.livingroom_roof
+        data_template:
+          brightness: >-
+            {% if is_state('input_boolean.tod_ad', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_night', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_day', 'on') %}
+            0
+            {% elif is_state('input_boolean.tod_morning', 'on') %}
+            0
+            {% endif %}    
 
   set_bathroom_lights:
     alias: Set bathroom lights
@@ -175,6 +209,7 @@
             {% elif is_state('input_boolean.tod_morning', 'on') %}
             25
             {% endif %}
+
   set_playroom_lights:
     alias: Set playroomroom lights
     sequence:
@@ -192,7 +227,8 @@
             5
             {% elif is_state('input_boolean.tod_morning', 'on') %}
             10
-            {% endif %}    
+            {% endif %}  
+  
   open_main_door:
     alias: Unlock Main Door
     sequence:

@@ -176,7 +176,7 @@ light:
         set_level:
 
 binary_sensor:
-  - platform: ring
+#  - platform: ring
   - platform: template
     sensors:
       livingroom_motion_combined:
@@ -203,12 +203,14 @@ input_select:
      - Ikke gjester
      
 camera:
-  - platform: ring
+#  - platform: ring
 
   - platform: generic
     still_image_url: !secret meteogram_png_url
     name: Meteogram
-
+  - platform: local_file
+    file_path: /tmp/utendors_latest.jpg
+    name: latest detection
   - platform: mjpeg
     name: Ultimaker 3
     mjpeg_url: http://ultimaker001.local.elnan.do:8080/?action=stream
@@ -246,9 +248,9 @@ netatmo:
   username: !secret netatmo_username
   password: !secret netatmo_password
 
-ring:
-  username: !secret ring_username
-  password: !secret ring_password
+# ring:
+#   username: !secret ring_username
+#   password: !secret ring_password
 
 tts:
   - platform: google_translate
@@ -296,20 +298,12 @@ notify:
     host: 10.20.0.60
     name: living_room_tv_notify
     filename: webostv.conf
-  - name: pushbullet_notify
-    platform: pushbullet
-    api_key: !secret pushbullet_api_key
-    notify:
-  - platform: html5
-    name: HomeAssistantHTML5
-    gcm_api_key: !secret google_sender_api_key
-    gcm_sender_id: !secret google_sender_id
 
-vacuum:
-  - platform: roomba
-    host: !secret roomba_ip
-    username: !secret roomba_blid
-    password: !secret roomba_pwd
+#vacuum:
+#  - platform: roomba
+#    host: !secret roomba_ip
+#    username: !secret roomba_blid
+#    password: !secret roomba_pwd
 
 mqtt_statestream:
   base_topic: homeassistant
@@ -362,3 +356,49 @@ automation: !include automations.yaml
 script: !include scripts.yaml
 sensor: !include sensors.yaml
 input_boolean: !include input_booleans.yaml
+
+panel_custom:
+  - name: zwavegraph2
+    sidebar_title: Z-Wave Graph
+    sidebar_icon: mdi:access-point-network
+    url_path: zwavegraph
+
+image_processing:
+  - platform: doods
+    scan_interval: 1
+    url: !secret doods_url
+    detector: edgetpu
+    source:
+      - entity_id: camera.utendors
+    file_out:
+      - "/tmp/{{ camera_entity.split('.')[1] }}_latest.jpg"
+      - "/tmp/{{ camera_entity.split('.')[1] }}_{{ now().strftime('%Y%m%d_%H%M%S') }}.jpg"
+    confidence: 50
+    area:
+      top: 0.3
+      right: 0.90
+      left: 0.20
+      covers: true
+    labels:
+      - name: person
+        confidence: 65
+        area:
+          top: 0.50
+          right: 0.92
+          left: 0.27
+          covers: false
+      - name: car
+        confidence: 55
+        area: 
+          top: 0.45
+          right: 0.70
+          left: 0.55
+          bottom: 0.55
+          covers: false
+      - name: cat
+        confidence: 40
+        area:
+          top: 0.60
+          right: 0.90
+          left: 0.20
+          covers: false

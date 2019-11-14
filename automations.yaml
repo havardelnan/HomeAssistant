@@ -24,25 +24,25 @@
       entity_id: input_number.pricepowerconsumptionheating
       value: "{{((((states.sensor.power_heating.state | int / 60) | round(0)) | int * 10) *  ((states.sensor.electricity_price_rognervegen_4a.state | float) + (states.sensor.nettleie.state | float))/1000) | round(3) + ((range(1, 100) | random)/100000)}}"
 
-- id: test_workshop_switch_on
-  alias: Test slå på
-  trigger:
-    platform: state
-    entity_id: switch.workshop_switch
-    to: 'on'
-  action:
-    service: light.turn_on
-    entity_id: light.hue_color_lamp_1
+# - id: test_workshop_switch_on
+#   alias: Test slå på
+#   trigger:
+#     platform: state
+#     entity_id: switch.workshop_switch
+#     to: 'on'
+#   action:
+#     service: light.turn_on
+#     entity_id: light.hue_color_lamp_1
 
-- id: test_workshop_switch_off
-  alias: Test slå av
-  trigger:
-    platform: state
-    entity_id: switch.workshop_switch
-    to: 'off'
-  action:
-    service: light.turn_off
-    entity_id: light.hue_color_lamp_1
+# - id: test_workshop_switch_off
+#   alias: Test slå av
+#   trigger:
+#     platform: state
+#     entity_id: switch.workshop_switch
+#     to: 'off'
+#   action:
+#     service: light.turn_off
+#     entity_id: light.hue_color_lamp_1
 
 - id: auto_set_tod_ad
   alias: Set time of day after dark
@@ -103,7 +103,6 @@
       - condition: numeric_state
         entity_id: sensor.outdoor_light_level
         below: 2500
-    
   action:
     - service: input_boolean.turn_on
       entity_id: input_boolean.tod_ad
@@ -136,7 +135,7 @@
   initial_state: true
   trigger:
     platform: time
-    at: '06:00:00'
+    at: '05:45:00'
   condition:
     condition: state
     entity_id: input_boolean.tod_night
@@ -318,37 +317,37 @@
 #                    #
 ######################
 
-- id: guestbathroom_on_movement
-  alias: Turn on guest bathroom light when there is movement
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.guestbathroom_motion
-    to: 'on'
-  condition:
-    condition: state
-    entity_id: input_boolean.guestbathroom_auto
-    state: 'on'
-  action:
-    - service: scene.turn_on
-      entity_id: scene.guestbathroom_ad_light
+# - id: guestbathroom_on_movement
+#   alias: Turn on guest bathroom light when there is movement
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.guestbathroom_motion
+#     to: 'on'
+#   condition:
+#     condition: state
+#     entity_id: input_boolean.guestbathroom_auto
+#     state: 'on'
+#   action:
+#     - service: scene.turn_on
+#       entity_id: scene.guestbathroom_ad_light
 
-- id: guestbathroom_off_after_movement
-  alias: Turn off guest bathroom light 10 minutes after last movement
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.guestbathroom_motion
-    to: 'off'
-    for:
-      minutes: 9
-  condition:
-    condition: state
-    entity_id: input_boolean.guestbathroom_auto
-    state: 'on'
-  action:
-    - service: scene.turn_on
-      entity_id: scene.guestbathroom_ad_off
+# - id: guestbathroom_off_after_movement
+#   alias: Turn off guest bathroom light 10 minutes after last movement
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.guestbathroom_motion
+#     to: 'off'
+#     for:
+#       minutes: 9
+#   condition:
+#     condition: state
+#     entity_id: input_boolean.guestbathroom_auto
+#     state: 'on'
+#   action:
+#     - service: scene.turn_on
+#       entity_id: scene.guestbathroom_ad_off
     
 ################
 #              #
@@ -356,59 +355,59 @@
 #              #
 ################
 
-- id: entrance_light_on_movement
-  alias: Turn on entrance light when there is movement
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.entrance_motion
-    to: 'on'
-  condition:
-    condition: state
-    entity_id: input_boolean.hall_auto
-    state: 'on'
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: 
-          - light.entrance
-      data_template:
-        brightness: >-
-          {% if is_state('input_boolean.tod_ad', 'on') %}
-          128
-          {% elif is_state('input_boolean.tod_night', 'on') %}
-          50
-          {% elif is_state('input_boolean.tod_day', 'on') %}
-          128
-          {% elif is_state('input_boolean.tod_morning', 'on') %}
-          128
-          {% endif %}
-    - service: light.turn_on
-      entity_id:
-        - light.dashboard_screen
+# - id: entrance_light_on_movement
+#   alias: Turn on entrance light when there is movement
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.entrance_motion
+#     to: 'on'
+#   condition:
+#     condition: state
+#     entity_id: input_boolean.hall_auto
+#     state: 'on'
+#   action:
+#     - service: light.turn_on
+#       data:
+#         entity_id: 
+#           - light.entrance
+#       data_template:
+#         brightness: >-
+#           {% if is_state('input_boolean.tod_ad', 'on') %}
+#           128
+#           {% elif is_state('input_boolean.tod_night', 'on') %}
+#           50
+#           {% elif is_state('input_boolean.tod_day', 'on') %}
+#           128
+#           {% elif is_state('input_boolean.tod_morning', 'on') %}
+#           128
+#           {% endif %}
+#     - service: light.turn_on
+#       entity_id:
+#         - light.dashboard_screen
         
-- id: entrance_dim_after_movement
-  alias: Dim entrance light 5 minutes after last movement
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: binary_sensor.entrance_motion
-    to: 'off'
-    for:
-      minutes: 4
-  condition:
-    condition: state
-    entity_id: input_boolean.hall_auto
-    state: 'on'
-  action:
-    - service: light.turn_on
-      data:
-        entity_id: 
-          - light.entrance
-        brightness: 3
-    - service: light.turn_off
-      entity_id:
-        - light.dashboard_screen
+# - id: entrance_dim_after_movement
+#   alias: Dim entrance light 5 minutes after last movement
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.entrance_motion
+#     to: 'off'
+#     for:
+#       minutes: 4
+#   condition:
+#     condition: state
+#     entity_id: input_boolean.hall_auto
+#     state: 'on'
+#   action:
+#     - service: light.turn_on
+#       data:
+#         entity_id: 
+#           - light.entrance
+#         brightness: 3
+#     - service: light.turn_off
+#       entity_id:
+#         - light.dashboard_screen
 
 ######################
 #                    #
@@ -416,16 +415,16 @@
 #                    #
 ######################
 
-- id: masterbedroom_light on AD
-  alias: Soverom - slå på overlys kveld
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: input_boolean.tod_ad
-    to: 'on'
-  action:
-    service: scene.turn_on
-    entity_id: scene.bedroom_ad_dim_2
+# - id: masterbedroom_light on AD
+#   alias: Soverom - slå på overlys kveld
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: input_boolean.tod_ad
+#     to: 'on'
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.bedroom_ad_dim_2
 
 # Switches
 
@@ -566,27 +565,27 @@
     entity_id: script.bedroom_set_light_off
 
 
-- id: notify_tv_on_motion
-  alias: Notify tv on movement front door
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ring_front_door_motion
-    to: 'on'    
-  action:
-    service: notify.living_room_tv_notify
-    data:
-      message: "Movement detected: Front Door"
+# - id: notify_tv_on_motion
+#   alias: Notify tv on movement front door
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.ring_front_door_motion
+#     to: 'on'    
+#   action:
+#     service: notify.living_room_tv_notify
+#     data:
+#       message: "Movement detected: Front Door"
       
-- id: notify_tv_on_ding
-  alias: Notify tv on ding front door
-  trigger:
-    platform: state
-    entity_id: binary_sensor.ring_front_door_ding
-    to: 'on'    
-  action:
-    service: notify.living_room_tv_notify
-    data:
-      message: "Ding Dong: Front Door"
+# - id: notify_tv_on_ding
+#   alias: Notify tv on ding front door
+#   trigger:
+#     platform: state
+#     entity_id: binary_sensor.ring_front_door_ding
+#     to: 'on'    
+#   action:
+#     service: notify.living_room_tv_notify
+#     data:
+#       message: "Ding Dong: Front Door"
 
 - id: letsencrypt-renewal
   alias: "Let's Encrypt Renewal"

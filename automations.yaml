@@ -428,141 +428,141 @@
 
 # Switches
 
-- id: guestbedroom_button4
-  alias: 'Guest bedroom Button 4 Pressed'
-  initial_state: true
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad
-      scene_id: 4
-  action:
-    service: scene.turn_on
-    entity_id: scene.guestbedroom_ad_off
-- id: guestbedroom_button1
-  alias: 'Guest bedroom Button 1 Pressed'
-  initial_state: true
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad
-      scene_id: 1
-  action:
-    service: scene.turn_on
-    entity_id: scene.guestbedroom_ad_dim
-- id: guestbedroom_button2
-  alias: 'Guest bedroom Button 2 Pressed'
-  initial_state: true
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad
-      scene_id: 2
-  action:
-    service: scene.turn_on
-    entity_id: scene.guestbedroom_ad_light
-- id: bedroomolav_button1
-  alias: 'Olav Button 1 Pressed'
-  initial_state: true
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_3
-      scene_id: 1
-  action:
-    - service: light.turn_on
-      entity_id: light.bedroomolav_roof_02
-- id: bedroomolav_button2
-  alias: 'Olav Button 2 Pressed'
-  initial_state: true
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_3
-      scene_id: 2
-  action:
-    - service: light.turn_on
-      entity_id: light.bedroomolav_roof_01
-- id: bedroomolav_button3
-  alias: 'Olav Button 3 Pressed'
-  initial_state: true
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_3
-      scene_id: 3
-  action:
-    - service: light.turn_on
-      entity_id: light.bedroomolav_roof_01
-    - service: light.turn_on
-      entity_id: light.bedroomolav_roof_02
+# - id: guestbedroom_button4
+#   alias: 'Guest bedroom Button 4 Pressed'
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad
+#       scene_id: 4
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.guestbedroom_ad_off
+# - id: guestbedroom_button1
+#   alias: 'Guest bedroom Button 1 Pressed'
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad
+#       scene_id: 1
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.guestbedroom_ad_dim
+# - id: guestbedroom_button2
+#   alias: 'Guest bedroom Button 2 Pressed'
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad
+#       scene_id: 2
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.guestbedroom_ad_light
+# - id: bedroomolav_button1
+#   alias: 'Olav Button 1 Pressed'
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
+#       scene_id: 1
+#   action:
+#     - service: light.turn_on
+#       entity_id: light.bedroomolav_roof_02
+# - id: bedroomolav_button2
+#   alias: 'Olav Button 2 Pressed'
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
+#       scene_id: 2
+#   action:
+#     - service: light.turn_on
+#       entity_id: light.bedroomolav_roof_01
+# - id: bedroomolav_button3
+#   alias: 'Olav Button 3 Pressed'
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
+#       scene_id: 3
+#   action:
+#     - service: light.turn_on
+#       entity_id: light.bedroomolav_roof_01
+#     - service: light.turn_on
+#       entity_id: light.bedroomolav_roof_02
 
 
-- id: bedroomolav_button4
-  alias: 'Olav Button 4 Pressed'
-  initial_state: true
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_3
-      scene_id: 4
-  action:
-    - service: light.turn_off
-      entity_id: light.bedroomolav_roof_01
-    - service: light.turn_off
-      entity_id: light.bedroomolav_roof_02
+# - id: bedroomolav_button4
+#   alias: 'Olav Button 4 Pressed'
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
+#       scene_id: 4
+#   action:
+#     - service: light.turn_off
+#       entity_id: light.bedroomolav_roof_01
+#     - service: light.turn_off
+#       entity_id: light.bedroomolav_roof_02
       
-- id: masterbedroom_button1
-  alias: 'Master bedroom Button 1 Pressed'
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_5
-      scene_id: 1
-  action:
-    service: scene.turn_on
-    entity_id: scene.bedroom_ad_dim_1
-- id: masterbedroom_button2
-  alias: 'Master bedroom Button 2 Pressed'
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_5
-      scene_id: 2
-  action:
-    service: scene.turn_on
-    entity_id: scene.bedroom_ad_dim_2
-- id: masterbedroom_button3
-  alias: 'Master bedroom Button 3 Pressed'
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_5
-      scene_id: 3
-  action:
-    service: script.turn_on
-    entity_id: script.bedroom_set_light_full
-- id: masterbedroom_button4
-  alias: 'Master bedroom Button 4 Pressed'
-  trigger:
-    platform: event
-    event_type: zwave.scene_activated
-    event_data:
-      entity_id: zwave.aeotec_zw130_wallmote_quad_5
-      scene_id: 4
-  action:
-    service: script.turn_on
-    entity_id: script.bedroom_set_light_off
+# - id: masterbedroom_button1
+#   alias: 'Master bedroom Button 1 Pressed'
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
+#       scene_id: 1
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.bedroom_ad_dim_1
+# - id: masterbedroom_button2
+#   alias: 'Master bedroom Button 2 Pressed'
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
+#       scene_id: 2
+#   action:
+#     service: scene.turn_on
+#     entity_id: scene.bedroom_ad_dim_2
+# - id: masterbedroom_button3
+#   alias: 'Master bedroom Button 3 Pressed'
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
+#       scene_id: 3
+#   action:
+#     service: script.turn_on
+#     entity_id: script.bedroom_set_light_full
+# - id: masterbedroom_button4
+#   alias: 'Master bedroom Button 4 Pressed'
+#   trigger:
+#     platform: event
+#     event_type: zwave.scene_activated
+#     event_data:
+#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
+#       scene_id: 4
+#   action:
+#     service: script.turn_on
+#     entity_id: script.bedroom_set_light_off
 
 
 # - id: notify_tv_on_motion

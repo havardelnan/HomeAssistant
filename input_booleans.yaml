@@ -70,6 +70,9 @@
   workshop_movement:
     name: Light workshop movement
     icon: mdi:run-fast
+  outside_movement:
+    name: Light outside movement
+    icon: mdi:run-fast
   tod_ad:
     name: Time of day after dark
     icon: mdi:clock

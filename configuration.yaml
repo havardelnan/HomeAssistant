@@ -54,7 +54,7 @@ http:
   server_port: 4343
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
-  ip_ban_enabled: True
+  ip_ban_enabled: False
   login_attempts_threshold: 10
   use_x_forwarded_for: True
   trusted_proxies:
@@ -88,7 +88,7 @@ zone:
   - name: Kjøkken
     latitude: !secret ha_latitude
     longitude: !secret ha_longitude
-    radius: 3
+    radius: 6
     passive: true
 
 apple_tv:
@@ -144,6 +144,50 @@ input_number:
     name: PowerPrice
     min: 0
     max: 50
+  kitchen_pid:
+    name: PID output kitchen
+    min: 0
+    max: 100
+  hall_heating_pid:
+    name: PID output entrance
+    min: 0
+    max: 100
+  guestbedroom_heating_pid:
+    name: PID output guest bedroom
+    min: 0
+    max: 100
+  guestbathroom_heating_pid:
+    name: PID output guest bath room
+    min: 0
+    max: 100
+  livingroom_heating_pid:
+    name: PID output living room
+    min: 0
+    max: 100
+  bedroom_heating_pid:
+    name: PID output bedroom
+    min: 0
+    max: 100
+  bathroom_heating_pid:
+    name: PID output bath room
+    min: 0
+    max: 100
+  bedroomolav_heating_pid:
+    name: PID output bedroom Olav
+    min: 0
+    max: 100
+  playroom_heating_pid:
+    name: PID output play room
+    min: 0
+    max: 100
+  laundry_heating_pid:
+    name: PID output laundry
+    min: 0
+    max: 100
+  workshop_heating_pid:
+    name: PID output workshop
+    min: 0
+    max: 100
 
 tibber:
   access_token: !secret tibber_access_token
@@ -177,31 +221,34 @@ light:
 
 binary_sensor:
 #  - platform: ring
-  - platform: template
-    sensors:
-      livingroom_motion_combined:
-        friendly_name: "Bevegelse stue"
-        device_class: motion
-        value_template: >-
-          {% if is_state('binary_sensor.livingroom_01_motion', 'on')
-             or is_state('binary_sensor.livingroom_02_motion', 'on') %}
-             true
-          {% else %}
-             false
-          {% endif %}
+  # - platform: template
+  #   sensors:
+  #     livingroom_motion_combined:
+  #       friendly_name: "Bevegelse stue"
+  #       device_class: motion
+  #       value_template: >-
+  #         {% if is_state('binary_sensor.livingroom_01_motion', 'on')
+  #           or is_state('binary_sensor.livingroom_02_motion', 'on') %}
+  #           true
+  #         {% else %}
+  #           false
+  #         {% endif %}
   - platform: workday
     country: "NO"
     workdays: [mon, tue, wed, thu, fri]
   - platform: mqtt
     name: dashboard_motion
     state_topic: any/value
+  - platform: mqtt
+    name: gamer_screensaver
+    state_topic: computer/gamer/screensaver
 input_select:
   guestbedroom_mode:
     name: Gjesterom modus
     options:
-     - Gjester
-     - Ikke gjester
-     
+      - Gjester
+      - Ikke gjester
+
 camera:
 #  - platform: ring
 
@@ -213,7 +260,7 @@ camera:
     name: latest detection
   - platform: mjpeg
     name: Ultimaker 3
-    mjpeg_url: http://ultimaker001.local.elnan.do:8080/?action=stream
+    mjpeg_url: http://ultimaker01.local.elnan.do:8080/?action=stream
 
   - platform: generic
     name: Utendørs
@@ -232,8 +279,6 @@ camera:
 ffmpeg:
 
 stream:
-
-owntracks:
 
 mobile_app:
 
@@ -255,6 +300,15 @@ netatmo:
 tts:
   - platform: google_translate
     service_name: google_say
+  - platform: google_cloud
+    key_file: googlecloud.google.token
+    language: nb-NO
+    gender: female
+    voice: nb-NO-Wavenet-A
+    encoding: linear16
+    profiles:
+      - medium-bluetooth-speaker-class-device
+
 
 cloud:
   google_actions:
@@ -267,14 +321,14 @@ cloud:
       light.kitchen_bench:
         name: Kjøkkenbenk
         aliases:
-         - Benk
-         - Kitchen bench
-         - Bench
+          - Benk
+          - Kitchen bench
+          - Bench
         room: kitchen
       light.livingroom_roof:
         name: Living room roof
         aliases:
-         - Stuetak
+          - Stuetak
         room: living room
 
 media_player:
@@ -282,7 +336,7 @@ media_player:
     host: 10.20.0.60
     name: Living Room TV
     timeout: 5
-    filename: webostv.conf
+    filename: webostv01.conf
     turn_on_action:
       service: wake_on_lan.send_magic_packet
       data:
@@ -292,18 +346,39 @@ media_player:
         - livetv
         - youtube
         - netflix
-
+  - platform: webostv
+    host: 10.20.0.61
+    name: Game Room TV
+    timeout: 5
+    filename: webostv02.conf
+    turn_on_action:
+      service: wake_on_lan.send_magic_packet
+      data:
+        mac: 78:5D:C8:92:9a:d7
+    customize:
+      sources:
+        - livetv
+        - youtube
+        - netflix
+  - platform: vlc_telnet
+    name: Verksted
+    host: !secret vlc_host
+    port: 4212
+    password: !secret vlc_pass
 notify:
   - platform: webostv
     host: 10.20.0.60
     name: living_room_tv_notify
-    filename: webostv.conf
-
-#vacuum:
-#  - platform: roomba
-#    host: !secret roomba_ip
-#    username: !secret roomba_blid
-#    password: !secret roomba_pwd
+    filename: webostv01.conf
+  - platform: webostv
+    host: 10.20.0.61
+    name: game_room_tv_notify
+    filename: webostv02.conf
+vacuum:
+  - platform: roomba
+    host: !secret roomba_ip
+    username: !secret roomba_blid
+    password: !secret roomba_pwd
 
 mqtt_statestream:
   base_topic: homeassistant
@@ -318,7 +393,7 @@ mqtt_statestream:
       - input_boolean
       - input_select
       - input_number
-      
+
 switch:
   - platform: mqtt
     name: "Workshop switch"
@@ -331,7 +406,7 @@ switch:
     optimistic: false
     qos: 0
     retain: true
-    
+
 device_tracker:
   - platform: cisco_mobility_express
     host: !secret mobilityexpress_host

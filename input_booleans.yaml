@@ -88,3 +88,6 @@
   tod_workday:
     name: Is a workday
     icon: mdi:calendar
+  verksted_zone_he:
+    name: HE in workshop
+    icon: mdi:cellphone

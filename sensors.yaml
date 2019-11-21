@@ -360,3 +360,15 @@
   - platform: mqtt
     name: fbmessenger
     state_topic: "test/fb"
+  - platform: mqtt
+    name: CPUtemp
+    state_topic: "hahost/cputemp"
+    device_class: temperature
+  - platform: mqtt
+    name: Chipsettemp
+    state_topic: "hahost/chipsettemp"
+    device_class: temperature
+  - platform: mqtt
+    name: Chassistemp
+    state_topic: "hahost/chassistemp"
+    device_class: temperature

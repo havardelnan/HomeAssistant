@@ -24,6 +24,24 @@
       entity_id: input_number.pricepowerconsumptionheating
       value: "{{((((states.sensor.power_heating.state | int / 60) | round(0)) | int * 10) *  ((states.sensor.electricity_price_rognervegen_4a.state | float) + (states.sensor.nettleie.state | float))/1000) | round(3) + ((range(1, 100) | random)/100000)}}"
 
+- id: zone_enter_workshop
+  trigger:
+    platform: zone
+    entity_id: device_tracker.havard_sin_iphone_2
+    zone:  zone.verksted
+    event: enter
+  action:
+    service: input_boolean.turn_on
+    entity_id: input_boolean.verksted_zone_he
+- id: zone_leave_workshop
+  trigger:
+    platform: zone
+    entity_id: device_tracker.havard_sin_iphone_2
+    zone:  zone.verksted
+    event: enter
+  action:
+    service: input_boolean.turn_off
+    entity_id: input_boolean.verksted_zone_he    
 # - id: test_workshop_switch_on
 #   alias: Test slå på
 #   trigger:
@@ -169,6 +187,21 @@
         name: homekit-light
         
 
+
+- id: outdoor_movement
+  alias: ta opp ved utendørs bevegelse
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: input_boolean.outside_movement
+    to: 'on'
+  action: 
+    service: camera.record
+    data: 
+      entity_id: camera.utendors
+      filename: '/config/www/video/snapshot_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
+      duration: 20
+      lookback: 10
 ###############
 #             #
 #   Kitchen   #

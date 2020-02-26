@@ -1,34 +1,36 @@
 - id: set_powerconsumptionheating
   alias: Set powerconsumtionheating
   initial_state: true
-  trigger: 
+  trigger:
     platform: time_pattern
-    minutes: '/10'
-    seconds: 00
+    minutes: /10
+    seconds: 0
   action:
     service: input_number.set_value
     data_template:
       entity_id: input_number.powerconsumptionheating
-      value: "{{(((states.sensor.power_heating.state | int / 10) | round(0)) | int * 10) +  ((range(1, 100) | random)/1000)}}"
-
+      value: '{{(((states.sensor.power_heating.state | int / 10) | round(0)) | int
+        * 10) +  ((range(1, 100) | random)/1000)}}'
 - id: set_pricepowerconsumptionheating
   alias: Set price powerconsumptionheating
   initial_state: true
-  trigger: 
+  trigger:
     platform: time_pattern
-    minutes: '/10'
+    minutes: /10
     seconds: 30
   action:
     service: input_number.set_value
     data_template:
       entity_id: input_number.pricepowerconsumptionheating
-      value: "{{((((states.sensor.power_heating.state | int / 60) | round(0)) | int * 10) *  ((states.sensor.electricity_price_rognervegen_4a.state | float) + (states.sensor.nettleie.state | float))/1000) | round(3) + ((range(1, 100) | random)/100000)}}"
-
+      value: '{{((((states.sensor.power_heating.state | int / 60) | round(0)) | int
+        * 10) *  ((states.sensor.electricity_price_rognervegen_4a.state | float) +
+        (states.sensor.nettleie.state | float))/1000) | round(3) + ((range(1, 100)
+        | random)/100000)}}'
 - id: zone_enter_workshop
   trigger:
     platform: zone
     entity_id: device_tracker.havard_sin_iphone_2
-    zone:  zone.verksted
+    zone: zone.verksted
     event: enter
   action:
     service: input_boolean.turn_on
@@ -37,48 +39,27 @@
   trigger:
     platform: zone
     entity_id: device_tracker.havard_sin_iphone_2
-    zone:  zone.verksted
+    zone: zone.verksted
     event: enter
   action:
     service: input_boolean.turn_off
-    entity_id: input_boolean.verksted_zone_he    
-# - id: test_workshop_switch_on
-#   alias: Test slå på
-#   trigger:
-#     platform: state
-#     entity_id: switch.workshop_switch
-#     to: 'on'
-#   action:
-#     service: light.turn_on
-#     entity_id: light.hue_color_lamp_1
-
-# - id: test_workshop_switch_off
-#   alias: Test slå av
-#   trigger:
-#     platform: state
-#     entity_id: switch.workshop_switch
-#     to: 'off'
-#   action:
-#     service: light.turn_off
-#     entity_id: light.hue_color_lamp_1
-
+    entity_id: input_boolean.verksted_zone_he
 - id: auto_set_tod_ad
   alias: Set time of day after dark
   initial_state: true
   trigger:
     platform: numeric_state
     entity_id: sun.sun
-    value_template: "{{ state.attributes.elevation }}"
+    value_template: '{{ state.attributes.elevation }}'
     below: 5.0
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.tod_ad
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.tod_day
-    - service: frontend.set_theme
-      data:
-        name: homekit-dark
-
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.tod_ad
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.tod_day
+  - service: frontend.set_theme
+    data:
+      name: homekit-dark
 - id: auto_set_tod_ad_light
   alias: Set time of day after dark when light is low
   initial_state: true
@@ -91,20 +72,19 @@
   condition:
     condition: and
     conditions:
-      - condition: state
-        entity_id: input_boolean.tod_day
-        state: 'on'
-      - condition: time
-        after: '15:00:00'
-  action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.tod_ad
-    - service: input_boolean.turn_off
+    - condition: state
       entity_id: input_boolean.tod_day
-    - service: frontend.set_theme
-      data:
-        name: homekit-dark
-
+      state: 'on'
+    - condition: time
+      after: '15:00:00'
+  action:
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.tod_ad
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.tod_day
+  - service: frontend.set_theme
+    data:
+      name: homekit-dark
 - id: auto_set_tod_ad_15
   alias: Set time of day after dark 1500
   initial_state: true
@@ -114,80 +94,73 @@
   condition:
     condition: or
     conditions:
-      - condition: numeric_state
-        entity_id: sun.sun
-        value_template: "{{ state.attributes.elevation }}"
-        below: 5.0
-      - condition: numeric_state
-        entity_id: sensor.outdoor_light_level
-        below: 2500
+    - condition: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      below: 5.0
+    - condition: numeric_state
+      entity_id: sensor.outdoor_light_level
+      below: 2500
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.tod_ad
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.tod_day
-    - service: frontend.set_theme
-      data:
-        name: homekit-dark
-    
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.tod_ad
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.tod_day
+  - service: frontend.set_theme
+    data:
+      name: homekit-dark
 - id: auto_set_tod_night
   alias: Set time of day night and cleanup
   initial_state: true
   trigger:
     platform: time
-    at: '00:01:00'
+    at: 00:01:00
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.tod_night
-    - service: input_boolean.turn_off
-      entity_id:
-        - input_boolean.tod_ad
-        - input_boolean.tod_day
-        - input_boolean.tod_morning
-    - service: frontend.set_theme
-      data:
-        name: homekit-dark
-
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.tod_night
+  - service: input_boolean.turn_off
+    entity_id:
+    - input_boolean.tod_ad
+    - input_boolean.tod_day
+    - input_boolean.tod_morning
+  - service: frontend.set_theme
+    data:
+      name: homekit-dark
 - id: auto_set_tod_morning
   alias: Set time of day morning
   initial_state: true
   trigger:
     platform: time
-    at: '05:45:00'
+    at: 05:45:00
   condition:
     condition: state
     entity_id: input_boolean.tod_night
     state: 'on'
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.tod_morning
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.tod_night
-    - service: frontend.set_theme
-      data:
-        name: homekit-light
-    
-      
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.tod_morning
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.tod_night
+  - service: frontend.set_theme
+    data:
+      name: homekit-light
 - id: auto_set_tod_day
   alias: Set time of day day
   initial_state: true
   trigger:
     platform: sun
     event: sunrise
-    offset: "+01:30:00"
+    offset: +01:30:00
   action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.tod_day
-    - service: input_boolean.turn_off
-      entity_id: 
-        - input_boolean.tod_morning
-        - input_boolean.tod_night
-    - service: frontend.set_theme
-      data:
-        name: homekit-light
-        
-
-
+  - service: input_boolean.turn_on
+    entity_id: input_boolean.tod_day
+  - service: input_boolean.turn_off
+    entity_id:
+    - input_boolean.tod_morning
+    - input_boolean.tod_night
+  - service: frontend.set_theme
+    data:
+      name: homekit-light
 - id: outdoor_movement
   alias: ta opp ved utendørs bevegelse
   initial_state: true
@@ -195,442 +168,23 @@
     platform: state
     entity_id: input_boolean.outside_movement
     to: 'on'
-  action: 
+  action:
     service: camera.record
-    data: 
+    data:
       entity_id: camera.utendors
-      filename: '/config/www/video/snapshot_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4'
+      filename: /config/www/videos/snapshot_{{ now().strftime("%Y%m%d-%H%M%S") }}.mp4
       duration: 20
       lookback: 10
-###############
-#             #
-#   Kitchen   #
-#             #
-###############
-
-# - id: kitchen_turn_on_light_dimmed_ad
-#   alias: Kjøkken - Slå på lys dimmet når det blir kveld
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.tod_ad
-#     to: 'on'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: input_boolean.kitchen_auto
-#         state: 'on'
-#       - condition: state
-#         entity_id: group.motion_kitchen
-#         state: 'off'        
-#   action:
-#     service: script.turn_on
-#     entity_id: script.kitchen_light_dimmed
-
-# - id: kitchen_turn_on_light_ad
-#   alias: Kjøkken - Slå på lys når det blir kveld
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.tod_ad
-#     to: 'on'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: input_boolean.kitchen_auto
-#         state: 'on'
-#       - condition: state
-#         entity_id: group.motion_kitchen
-#         state: 'on'        
-#   action:
-#     service: script.turn_on
-#     entity_id: script.kitchen_light_on
-
-# - id: kitchen_turn_on_light_movement
-#   alias: Kjøkken - Slå på lys når det er bevegelse
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: group.motion_kitchen
-#     to: 'on'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: input_boolean.kitchen_auto
-#         state: 'on'
-#   action:
-#     - service: script.turn_on
-#       entity_id: script.kitchen_light_on
-
-# - id: kitchen_turn_on_dimmed_night
-#   alias: Kjøkken - Slå på lys dimmet når det blir natt
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.tod_night
-#     to: 'on'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: input_boolean.kitchen_auto
-#         state: 'on'     
-#   action:
-#     service: script.turn_on
-#     entity_id: script.kitchen_light_dimmed
-
-# - id: kitchen_turn_on_light_dimmed_auto
-#   alias: Kjøkken - Slå på lys dimmet når modus endres til auto
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.kitchen_auto
-#     to: 'on'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: group.motion_kitchen
-#         state: 'off'        
-#   action:
-#     service: script.turn_on
-#     entity_id: script.kitchen_light_dimmed
-
-# - id: kitchen_turn_on_light_auto
-#   alias: Kjøkken - Slå på lys når modus endres til auto
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.kitchen_auto
-#     to: 'on'
-#   condition:
-#     condition: and
-#     conditions:
-#       - condition: state
-#         entity_id: group.motion_kitchen
-#         state: 'on'        
-#   action:
-#     service: script.turn_on
-#     entity_id: script.kitchen_light_on
-    
-##################
-#                #
-#   Livingroom   #
-#                #
-##################
-
-# - id: livingroom_turn_on_light_ad
-#   alias: Stue - Slå på lys når det blir kveld
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.tod_ad
-#     to: 'on'
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.livingroom_ad_dim
-
-# - id: livingroom_turn_off_light_night
-#   alias: Stue - Slå av lys når det blir natt
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.tod_ad
-#     to: 'off'
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.livingroom_ad_off
-
-######################
-#                    #
-#   Guest bathroom   #
-#                    #
-######################
-
-# - id: guestbathroom_on_movement
-#   alias: Turn on guest bathroom light when there is movement
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.guestbathroom_motion
-#     to: 'on'
-#   condition:
-#     condition: state
-#     entity_id: input_boolean.guestbathroom_auto
-#     state: 'on'
-#   action:
-#     - service: scene.turn_on
-#       entity_id: scene.guestbathroom_ad_light
-
-# - id: guestbathroom_off_after_movement
-#   alias: Turn off guest bathroom light 10 minutes after last movement
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.guestbathroom_motion
-#     to: 'off'
-#     for:
-#       minutes: 9
-#   condition:
-#     condition: state
-#     entity_id: input_boolean.guestbathroom_auto
-#     state: 'on'
-#   action:
-#     - service: scene.turn_on
-#       entity_id: scene.guestbathroom_ad_off
-    
-################
-#              #
-#   Entrance   #
-#              #
-################
-
-# - id: entrance_light_on_movement
-#   alias: Turn on entrance light when there is movement
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.entrance_motion
-#     to: 'on'
-#   condition:
-#     condition: state
-#     entity_id: input_boolean.hall_auto
-#     state: 'on'
-#   action:
-#     - service: light.turn_on
-#       data:
-#         entity_id: 
-#           - light.entrance
-#       data_template:
-#         brightness: >-
-#           {% if is_state('input_boolean.tod_ad', 'on') %}
-#           128
-#           {% elif is_state('input_boolean.tod_night', 'on') %}
-#           50
-#           {% elif is_state('input_boolean.tod_day', 'on') %}
-#           128
-#           {% elif is_state('input_boolean.tod_morning', 'on') %}
-#           128
-#           {% endif %}
-#     - service: light.turn_on
-#       entity_id:
-#         - light.dashboard_screen
-        
-# - id: entrance_dim_after_movement
-#   alias: Dim entrance light 5 minutes after last movement
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.entrance_motion
-#     to: 'off'
-#     for:
-#       minutes: 4
-#   condition:
-#     condition: state
-#     entity_id: input_boolean.hall_auto
-#     state: 'on'
-#   action:
-#     - service: light.turn_on
-#       data:
-#         entity_id: 
-#           - light.entrance
-#         brightness: 3
-#     - service: light.turn_off
-#       entity_id:
-#         - light.dashboard_screen
-
-######################
-#                    #
-#   Bedroom          #
-#                    #
-######################
-
-# - id: masterbedroom_light on AD
-#   alias: Soverom - slå på overlys kveld
-#   initial_state: true
-#   trigger:
-#     platform: state
-#     entity_id: input_boolean.tod_ad
-#     to: 'on'
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.bedroom_ad_dim_2
-
-# Switches
-
-# - id: guestbedroom_button4
-#   alias: 'Guest bedroom Button 4 Pressed'
-#   initial_state: true
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad
-#       scene_id: 4
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.guestbedroom_ad_off
-# - id: guestbedroom_button1
-#   alias: 'Guest bedroom Button 1 Pressed'
-#   initial_state: true
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad
-#       scene_id: 1
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.guestbedroom_ad_dim
-# - id: guestbedroom_button2
-#   alias: 'Guest bedroom Button 2 Pressed'
-#   initial_state: true
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad
-#       scene_id: 2
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.guestbedroom_ad_light
-# - id: bedroomolav_button1
-#   alias: 'Olav Button 1 Pressed'
-#   initial_state: true
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
-#       scene_id: 1
-#   action:
-#     - service: light.turn_on
-#       entity_id: light.bedroomolav_roof_02
-# - id: bedroomolav_button2
-#   alias: 'Olav Button 2 Pressed'
-#   initial_state: true
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
-#       scene_id: 2
-#   action:
-#     - service: light.turn_on
-#       entity_id: light.bedroomolav_roof_01
-# - id: bedroomolav_button3
-#   alias: 'Olav Button 3 Pressed'
-#   initial_state: true
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
-#       scene_id: 3
-#   action:
-#     - service: light.turn_on
-#       entity_id: light.bedroomolav_roof_01
-#     - service: light.turn_on
-#       entity_id: light.bedroomolav_roof_02
-
-
-# - id: bedroomolav_button4
-#   alias: 'Olav Button 4 Pressed'
-#   initial_state: true
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_3
-#       scene_id: 4
-#   action:
-#     - service: light.turn_off
-#       entity_id: light.bedroomolav_roof_01
-#     - service: light.turn_off
-#       entity_id: light.bedroomolav_roof_02
-      
-# - id: masterbedroom_button1
-#   alias: 'Master bedroom Button 1 Pressed'
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
-#       scene_id: 1
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.bedroom_ad_dim_1
-# - id: masterbedroom_button2
-#   alias: 'Master bedroom Button 2 Pressed'
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
-#       scene_id: 2
-#   action:
-#     service: scene.turn_on
-#     entity_id: scene.bedroom_ad_dim_2
-# - id: masterbedroom_button3
-#   alias: 'Master bedroom Button 3 Pressed'
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
-#       scene_id: 3
-#   action:
-#     service: script.turn_on
-#     entity_id: script.bedroom_set_light_full
-# - id: masterbedroom_button4
-#   alias: 'Master bedroom Button 4 Pressed'
-#   trigger:
-#     platform: event
-#     event_type: zwave.scene_activated
-#     event_data:
-#       entity_id: zwave.aeotec_zw130_wallmote_quad_5
-#       scene_id: 4
-#   action:
-#     service: script.turn_on
-#     entity_id: script.bedroom_set_light_off
-
-
-# - id: notify_tv_on_motion
-#   alias: Notify tv on movement front door
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.ring_front_door_motion
-#     to: 'on'    
-#   action:
-#     service: notify.living_room_tv_notify
-#     data:
-#       message: "Movement detected: Front Door"
-      
-# - id: notify_tv_on_ding
-#   alias: Notify tv on ding front door
-#   trigger:
-#     platform: state
-#     entity_id: binary_sensor.ring_front_door_ding
-#     to: 'on'    
-#   action:
-#     service: notify.living_room_tv_notify
-#     data:
-#       message: "Ding Dong: Front Door"
-
 - id: letsencrypt-renewal
-  alias: "Let's Encrypt Renewal"
-  initial_state: true
+  alias: Let's Encrypt Renewal
   trigger:
-  - platform: time
-    at: '00:00:00'
+  - at: 00:00:00
+    platform: time
   action:
-  - service: hassio.addon_restart
-    data:
-      addon: core_letsencrypt
-
+  - data:
+      addon: local_letsencrypt
+    service: hassio.addon_restart
+  initial_state: true
 - id: startup_initial
   alias: Startup cleanup
   initial_state: false
@@ -640,61 +194,59 @@
   action:
   - service: homeassistant.turn_on
     entity_id:
-      - input_boolean.kitchen_auto
-      - input_boolean.livingroom_auto
-      - input_boolean.bedroom_auto
-      - input_boolean.bathroom_auto
-      - input_boolean.guestbathroom_auto
-      - input_boolean.guestbedroom_auto
-      - input_boolean.hall_auto
-      - input_boolean.walkway_auto
-      - input_boolean.playroom_auto
-      - input_boolean.kidsbedroom_auto
-      - input_boolean.laundry_auto
-      - input_boolean.workshop_auto
-      
-# - id: update_morning_commute_sensor
-#   alias: "Commute - Update morning commute sensor"
-#   initial_state: 'on'
-#   trigger:
-#     - platform: time_pattern
-#       minutes: '/5'
-#       seconds: 00
-#   condition:
-#     - condition: time
-#       after: '07:00:00'
-#       before: '09:00:00'
-#     - condition: time
-#       weekday:
-#         - mon
-#         - tue
-#         - wed
-#         - thu
-#         - fri
-#   action:
-#     - service: homeassistant.update_entity
-#       data:
-#         entity_id: sensor.H_morning_comute
-        
-# - id: update_evening_commute_sensor
-#   alias: "Commute - Update evening commute sensor"
-#   initial_state: 'on'
-#   trigger:
-#     - platform: time_pattern
-#       minutes: '/5'
-#       seconds: 00
-#   condition:
-#     - condition: time
-#       after: '15:00:00'
-#       before: '17:00:00'
-#     - condition: time
-#       weekday:
-#         - mon
-#         - tue
-#         - wed
-#         - thu
-#         - fri
-#   action:
-#     - service: homeassistant.update_entity
-#       data:
-#         entity_id: sensor.H_evening_comute
+    - input_boolean.kitchen_auto
+    - input_boolean.livingroom_auto
+    - input_boolean.bedroom_auto
+    - input_boolean.bathroom_auto
+    - input_boolean.guestbathroom_auto
+    - input_boolean.guestbedroom_auto
+    - input_boolean.hall_auto
+    - input_boolean.walkway_auto
+    - input_boolean.playroom_auto
+    - input_boolean.kidsbedroom_auto
+    - input_boolean.laundry_auto
+    - input_boolean.workshop_auto
+- id: update_morning_commute_sensor
+  alias: Commute - Update morning commute sensor
+  initial_state: 'on'
+  trigger:
+  - platform: time_pattern
+    minutes: /5
+    seconds: 0
+  condition:
+  - condition: time
+    after: 07:00:00
+    before: 09:00:00
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: homeassistant.update_entity
+    data:
+      entity_id: sensor.H_morning_comute
+- id: update_evening_commute_sensor
+  alias: Commute - Update evening commute sensor
+  initial_state: 'on'
+  trigger:
+  - platform: time_pattern
+    minutes: /5
+    seconds: 0
+  condition:
+  - condition: time
+    after: '15:00:00'
+    before: '17:00:00'
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: homeassistant.update_entity
+    data:
+      entity_id: sensor.H_evening_comute

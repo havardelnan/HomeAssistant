@@ -317,25 +317,25 @@
         lat_sw: 63.409
         lon_sw: 10.359
 
-  # - platform: google_travel_time
-  #   name: H_morning_comute
-  #   api_key: !secret google_api_key
-  #   origin: zone.home
-  #   destination: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
-  #   scan_interval: 3600
-  #   options:
-  #     avoid: tolls
-  #     mode: driving
+  - platform: google_travel_time
+    name: H_morning_comute
+    api_key: !secret google_api_key
+    origin: zone.home
+    destination: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
+    scan_interval: 3600
+    options:
+      avoid: tolls
+      mode: driving
 
-  # - platform: google_travel_time
-  #   name: H_evening_comute
-  #   api_key: !secret google_api_key
-  #   origin: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
-  #   destination: zone.home
-  #   scan_interval: 3600
-  #   options:
-  #     avoid: tolls
-  #     mode: driving
+  - platform: google_travel_time
+    name: H_evening_comute
+    api_key: !secret google_api_key
+    origin: place_id:ChIJVZdRQJoxbUYRTcToJ4smjeM
+    destination: zone.home
+    scan_interval: 3600
+    options:
+      avoid: tolls
+      mode: driving
 
   - platform: entur_public_transport
     stop_ids:

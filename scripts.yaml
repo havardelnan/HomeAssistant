@@ -171,13 +171,13 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            12
+            50
             {% elif is_state('input_boolean.tod_night', 'on') %}
-            5
+            10
             {% elif is_state('input_boolean.tod_day', 'on') %}
-            25
+            50
             {% elif is_state('input_boolean.tod_morning', 'on') %}
-            25
+            50
             {% endif %}    
       - service: light.turn_on
         data:
@@ -186,13 +186,13 @@
         data_template:
           brightness: >-
             {% if is_state('input_boolean.tod_ad', 'on') %}
-            12
+            50
             {% elif is_state('input_boolean.tod_night', 'on') %}
-            5
+            10
             {% elif is_state('input_boolean.tod_day', 'on') %}
-            25
+            50
             {% elif is_state('input_boolean.tod_morning', 'on') %}
-            25
+            50
             {% endif %}
       - service: light.turn_on
         data:
